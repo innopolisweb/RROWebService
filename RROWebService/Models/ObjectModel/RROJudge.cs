@@ -15,11 +15,16 @@
         /// <summary>
         /// Current tour judge is participating now
         /// </summary>
-        public string Toure { get; set; }
+        public string Tour { get; set; }
 
         /// <summary>
         /// Polygon associated to this judge
         /// </summary>
         public int Polygon { get; set; }
+
+        /// <summary>
+        /// Passcode for judge that uses for authorization
+        /// </summary>
+        public string Pass { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace RROWebService
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Authorization}/{action=Index}/{id?}");
             });
             app.Run(context => context.Response.WriteAsync("ERROR 404 ((99((99(99(9("));
         }

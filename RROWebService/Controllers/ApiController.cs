@@ -1,6 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RROWebService.Models;
+using RROWebService.Models.ObjectModel;
+using RROWebService.Services;
 
 namespace RROWebService.Controllers
 {
@@ -8,43 +14,46 @@ namespace RROWebService.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
-        private CompetitionContext _dbContext;
+        private readonly CompetitionContext _dbContext;
 
         public ApiController(CompetitionContext dbContext)
         {
             _dbContext = dbContext;
         }
 
+        [HttpGet]
+        public string Authorize(string judgeId, string pass)
+        {
+            var getJudge = from judge in _dbContext.Judges
+                where judge.Id == judgeId
+                select judge;
+
+            var jugde = getJudge.First();
+            if (jugde.Pass.Equals(pass))
+            {
+                var token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
+                return token.ToString();
+            }
+            return new HttpResponseMessage(HttpStatusCode.Unauthorized).ToString();
+        }
 
         [HttpGet]
-        public IEnumerable<string> M()
+        public IList<RROTeam> Teams(int? polygon)
         {
-            return new string[] { "value1", "value2" };
-        }
+            var query = from it in _dbContext.Teams
+                where polygon == null || it.Polygon == polygon
+                select it;
 
-        // GET: api/Api/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
+            return query.ToList();
         }
+        
 
-        // POST: api/Api
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<HttpResponseMessage> AddTeams([FromBody] IList<RROTeam> teams)
         {
-        }
-
-        // PUT: api/Api/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _dbContext.Teams.AddRange(teams);
+            await _dbContext.SaveChangesAsync();
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }
