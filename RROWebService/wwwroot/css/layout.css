@@ -1,0 +1,62 @@
+/* Make header fixed, so it will be visible while scrolling */
+.mdl-layout__header {
+    position: fixed;
+}
+
+/* Set header row width to 50% */
+.mdl-layout__header-row {
+    width: 50%;
+}
+
+/* Set footer stick to the bottom of the screen */
+.mdl-mini-footer {
+    position: fixed;
+    width: 100%;
+    height: 5%;
+    bottom: 0;
+}
+
+/* Place button more to the left side */
+#footer-field-submitbtn {
+    margin-right: 30%;
+}
+
+
+
+/* ====================== PLAYING WITH TABLE =================== */
+
+/* Shifted table placeholder */
+.mdl-layout__content {
+    margin-top: 10%;
+    width: 100%;
+}
+
+td {
+    background-color: red;
+}
+
+th {
+    background-color: yellow;
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+input {
+    text-align: center;
+}
+
+#table-header {
+    position: fixed;
+}
+
+table {
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 7%;
+}
+
