@@ -5,6 +5,7 @@
     padding: 8% 0 0;
     margin: auto;
 }
+
 .form {
     position: relative;
     z-index: 1;
@@ -15,6 +16,18 @@
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
+h6 {
+    display: block;
+    color: crimson;
+    font-size: .90em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
 body {
     background: #99d6ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(right, #99d6ff, #008ae6);

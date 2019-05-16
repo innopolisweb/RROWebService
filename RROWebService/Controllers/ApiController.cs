@@ -22,19 +22,22 @@ namespace RROWebService.Controllers
         }
 
         [HttpGet]
-        public string Authorize(string judgeId, string pass)
+        public IActionResult Authorize(string judgeId, string pass)
         {
             var getJudge = from judge in _dbContext.Judges
                 where judge.Id == judgeId
                 select judge;
 
-            var jugde = getJudge.First();
-            if (jugde.Pass.Equals(pass))
+            if (!getJudge.Any())
             {
-                var token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
-                return token.ToString();
+                return Unauthorized();
             }
-            return new HttpResponseMessage(HttpStatusCode.Unauthorized).ToString();
+            var jugde = getJudge.First();
+            if (!jugde.Pass.Equals(pass)) return Unauthorized();
+
+            var token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
+            return Ok(token);
+
         }
 
         [HttpGet]

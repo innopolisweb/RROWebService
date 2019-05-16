@@ -16,27 +16,45 @@
 <body>
 
 
-    <div class="login-page">
-        <div class="form">
-            <form class="login-form" method="post">
-                <div class="mdl-layout--large-screen-only mdl-layout__header--transparent">
-                    <h3>Authorization</h3>
-                </div>
+<div class="login-page">
+    <div class="form">
+        <form class="login-form" method="post">
+            <div class="mdl-layout--large-screen-only mdl-layout__header--transparent">
+                <h3>Authorization</h3>
+                @if (Model.Error)
+                {
+                    <h6>Invalid ID or Password</h6>
+                }
+            </div>
+            <div>
                 <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="login" name="judgeId">
+                    <input class="mdl-textfield__input" type="text" id="login" name="judgeId" value="@Model.JudgeId.Trim()">
                     <label class="mdl-textfield__label" for="login">Login</label>
+
                 </div>
+                @if (Model.Secondary && String.IsNullOrWhiteSpace(Model.JudgeId))
+                {
+                    <h6 align="left">Enter ID</h6>
+                }
+            </div>
+
+            <div>
                 <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="password" id="password" name="pass">
+                    <input class="mdl-textfield__input" id="password" name="pass" type="password">
                     <label class="mdl-textfield__label" for="password">Password</label>
                 </div>
+                @if (Model.Secondary && String.IsNullOrEmpty(Model.Pass))
+                {
+                    <h6 align="left">Enter Password</h6>
+                }
 
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-                    Login
-                </button>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                Login
+            </button>
+        </form>
     </div>
+</div>
 
 </body>
 </html>
