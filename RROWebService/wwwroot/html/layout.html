@@ -4,50 +4,44 @@
     <meta charset="UTF-8">
     <title>Layout</title>
 
-    <!--This is import of the MDL to the UI part of thr project-->
-    <!--Second link responsible for page color theme "material.{primary}-{accent}.min.css"-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/table.css">
+
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-red.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
-    <!--This is my own stylesheet-->
-    <link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
-        <!-- Header container -->
-        <header class="mdl-layout__header mdl-color--grey-200 mdl-color-text--grey-800">
 
-            <!--Header has only one row with data {Tour} {Polygon} {Category} -->
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title" id="header-field-tour">Tour: 1</span>
-                <div class="mdl-layout-spacer"></div>
-                <span class="mdl-layout-title" id="header-field-polygon">Polygon: 1</span>
-                <div class="mdl-layout-spacer"></div>
-                <span class="mdl-layout-title" id="header-field-category">Category: 1</span>
-            </div>
-        </header>
-
-        <!-- Table container -->
-        <main class="mdl-layout__content">
-
-        </main>
+    <div id="header">
+        <div><p id="header-field-tour">Tour: 1</p></div>
+        <div><p id="header-field-polygon">Polygon: 1</p></div>
+        <div><p id="header-field-category">Category: 1</p></div>
     </div>
 
-    <!-- MDL Mini Footer Container-->
-    <footer class="mdl-mini-footer mdl-color--grey-200">
+    <div id="content">
+        <table class="mdl-data-table">
+            <thead>
+                <!-- Header from container -->
+            </thead>
 
-        <!-- MDL Footer left Section, responsible for judge full name -->
-        <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo mdl-color-text--grey-800" id="footer-field-fullname">Ivan Ivanov Ivanovich</div>
+            <tbody>
+                <!-- Row form container -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="footer">
+        <div>
+            <p>
+                Ivan Ivanov
+            </p>
         </div>
-
-        <!-- MDL Footer right Section, responsible for "Submit" button -->
-        <div class="mdl-mini-footer__right-section">
-            <button id="footer-field-submitbtn" class="mdl-button mdl-js-button mdl-button--raised mdl-color--green-500">
+        <div>
+            <button id="footer-field-submitbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
                 Submit
             </button>
         </div>
-    </footer>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,22 @@
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table thead {
+    background-color: #7acfff;
+}
+
+table thead th, table tbody td {
+    padding: 10px;
+}
+
+table thead th {
+    border-right: 3px dashed #e2e2e2;
+    border-left: 3px dashed  #e2e2e2;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #e2e2e2;
+}
+

@@ -1,62 +1,67 @@
-/* Make header fixed, so it will be visible while scrolling */
-.mdl-layout__header {
-    position: fixed;
+html {
+    height: 100%;
 }
 
-/* Set header row width to 50% */
-.mdl-layout__header-row {
-    width: 50%;
+body {
+    position: relative;
+    height: 100%;
+    z-index: 0;
 }
 
-/* Set footer stick to the bottom of the screen */
-.mdl-mini-footer {
+/* Header properties */
+#header {
+    background-color: rgb(249, 249, 249);
+    box-shadow: 0 0 20px 0 rgb(0, 0, 0);
+
     position: fixed;
+    top: 0;
+    left: 0;
+    height: 10%;
     width: 100%;
-    height: 5%;
+    z-index: 2;
+}
+
+#header div {
+    float: left;
+    text-align: center;
+
+    width: 15%;
+    height: 100%;
+    margin-top: 1.2%;
+}
+
+/* Content properties */
+#content {
+    overflow: scroll;
+
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+#content::-webkit-scrollbar { width: 0 !important }
+
+/* Footer properties */
+#footer {
+    background-color: rgb(249, 249, 249);
+    box-shadow: 0 0 20px 0 rgb(0, 0, 0);
+
+    position: fixed;
     bottom: 0;
-}
-
-/* Place button more to the left side */
-#footer-field-submitbtn {
-    margin-right: 30%;
-}
-
-
-
-/* ====================== PLAYING WITH TABLE =================== */
-
-/* Shifted table placeholder */
-.mdl-layout__content {
-    margin-top: 10%;
+    left: 0;
+    height: 10%;
     width: 100%;
+    z-index: 2;
 }
 
-td {
-    background-color: red;
-}
-
-th {
-    background-color: yellow;
-}
-
-th, td {
-    border: 1px solid black;
+#footer div {
+    float: left;
     text-align: center;
-}
 
-input {
-    text-align: center;
+    width: 15%;
+    height: 100%;
+    margin-top: 1.2%;
 }
-
-#table-header {
-    position: fixed;
-}
-
-table {
-    border-collapse: collapse;
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    margin-bottom: 7%;
-}
-
