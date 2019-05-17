@@ -1,0 +1,170 @@
+﻿@model RROWebService.Models.From1.Form1ViewModel
+<!-- 2018 year cvalification tour table header form -->
+<!-- Table header form -->
+<div id="table-header">
+    <!-- First row of the headers -->
+    <tr>
+        <th colspan="1"></th>
+        <th colspan="12" scope="colgroup">Свежий фрукт</th>
+        <th colspan="8" scope="colgroup" id="first">Незрелый фрукт</th>
+        <th colspan="8" scope="colgroup">Неприглядный фрукт</th>
+        <th colspan="8" scope="colgroup">Испорченный фрукт</th>
+        <th colspan="2" scope="colgroup">Стена</th>
+        <th colspan="2" scope="colgroup">Доп.Задание</th>
+        <th colspan="2" scope="colgroup">Финиш</th>
+        <th colspan="1" scope="colgroup"></th>
+        <th colspan="1" scope="colgroup"></th>
+        <th colspan="1" scope="colgroup"></th>
+    </tr>
+
+    <!-- Second row of the headers -->
+    <tr>
+        <th>Команда</th>
+
+        <th colspan="4">Полн.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+        <th colspan="4">Част.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+
+        <th colspan="2">Полн.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+        <th colspan="2">Част.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+
+        <th colspan="2">Полн.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+        <th colspan="2">Част.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+
+        <th colspan="2">Полн.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+        <th colspan="2">Част.</th>
+        <th>Всего</th>
+        <th>Кол-во баллов</th>
+
+        <th>1</th>
+        <th>Кол-во баллов</th>
+
+        <th>1</th>
+        <th>Кол-во баллов</th>
+
+        <th>1</th>
+        <th>Кол-во баллов</th>
+
+        <th>Всего</th>
+
+        <th>Время</th>
+
+        <th>Подпись участника</th>
+    </tr>
+</div>
+
+@foreach (var team in Model.Items)
+{
+    <tr>
+        <!-- Command name placeholder. C4 cell from RRO2018 sample-->
+        <td>@team.Team</td>
+
+        <!-- D4-G4 cells from 2018RRO sample -->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- I4-IJ cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- K4-N4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- P4-Q4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- R4-S4 cells from 2018RRO sample -->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- U4-V4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- W4-X4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- Z4-AA4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- AB4-AC4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- AE4-AF4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- AG4-AH4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- AJ4-AK4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- AL4-AM4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- AO4-AP4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- AQ4-AR4 cells from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+
+        <!-- AT4-AU4 cells from 2018RRO sample-->
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+
+        <!-- AV4 cell from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+
+        <!-- AW4 cell from 2018RRO sample-->
+        <td><input type="text" /></td>
+
+        <!-- AX4 cell from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+
+        <!-- AY4 cell from 2018RRO sample-->
+        <td><input type="text" /></td>
+
+        <!-- AZ4 cell from 2018RRO sample-->
+        <td><input type="checkbox" /></td>
+
+        <!-- BB4 cell from 2018RRO sample-->
+        <td><input type="text" /></td>
+
+        <!-- Overall points. BD4 cell from 2018RRO sample-->
+        <td><input type="text" /></td>
+
+        <!-- Try time in {min}-{sec}-{millsec} format. BE4 cell from 2018RRO sample-->
+        <td><input type="text" /></td>
+
+        <!-- Submition button, which stand for competitior agreement with points-->
+        <td><button>OK</button></td>
+    </tr>
+}

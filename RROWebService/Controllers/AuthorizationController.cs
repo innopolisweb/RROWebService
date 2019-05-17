@@ -12,7 +12,7 @@ namespace RROWebService.Controllers
         public IActionResult Index()
         {
             if (Request.Cookies.ContainsKey("token"))
-                return Content(Request.Cookies["token"]);
+                return RedirectToAction("Index", "ScoreBoard");
             return View(new AuthorizationViewModel());
         }
 
@@ -23,6 +23,8 @@ namespace RROWebService.Controllers
             {
                 vm.Secondary = true;
                 vm.Error = false;
+                vm.JudgeId = vm.JudgeId ?? "";
+                vm.Pass = vm.Pass ?? "";
                 return View(vm);
             }
 
@@ -37,9 +39,15 @@ namespace RROWebService.Controllers
                 Response.Cookies.Append("token", token, new CookieOptions
                 {
                     IsEssential = true,
-                    Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(20),
+                    Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(40),
                 });
-                return Content(token);
+                Response.Cookies.Append("judgeid", judgeid, new CookieOptions
+                {
+                    IsEssential = true,
+                    Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(40)
+                });
+
+                return RedirectToAction("Index", "ScoreBoard");
             }
 
             vm.Secondary = false;
