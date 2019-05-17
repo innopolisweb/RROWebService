@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using RROWebService.Models;
+using RROWebService.Models.Categories.Oml;
 using RROWebService.Models.ObjectModel;
 using RROWebService.Services;
 
@@ -27,7 +25,7 @@ namespace RROWebService.Controllers
         public IActionResult Authorize(string judgeId, string pass)
         {
             var getJudge = from judge in _dbContext.Judges
-                where judge.Id == judgeId
+                where judge.JudgeId == judgeId
                 select judge;
 
             if (!getJudge.Any())
@@ -60,18 +58,55 @@ namespace RROWebService.Controllers
                 return BadRequest();
 
             var judge = from it in _dbContext.Judges
-                where it.Id == id
-                select new RROJudge {Id = it.Id, Name = it.Name, Polygon = it.Polygon, Tour = it.Tour};
+                where it.JudgeId == id
+                select new RROJudge {JudgeId = it.JudgeId, Name = it.Name, Polygon = it.Polygon, Tour = it.Tour};
 
             return !judge.Any() ? null : judge.First();
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> AddTeams([FromBody] IList<RROTeam> teams)
+        public async Task<IActionResult> AddTeams([FromBody] IList<RROTeam> teams)
         {
             _dbContext.Teams.AddRange(teams);
             await _dbContext.SaveChangesAsync();
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Ok();
+        }
+
+        public async Task<IActionResult> OmlResult([FromBody] OmlScore score)
+        {
+            if (!Request.Cookies.ContainsKey("judgeid") || !Request.Cookies.ContainsKey("token"))
+                return Unauthorized();
+
+
+            var teamInBase = from it in _dbContext.OMLScoreBoard
+                where it.Round == score.Round
+                where it.TeamId == score.TeamId
+                select it;
+
+            if (!teamInBase.Any())
+            {
+                await _dbContext.OMLScoreBoard.AddAsync(score);
+                await _dbContext.SaveChangesAsync();
+                return Ok();
+            }
+
+            var record = teamInBase.First();
+            if (record.Saved == 1) return Forbid();
+
+            record.BlackBlockState = score.BlackBlockState;
+            record.BlueBlockState = score.BlueBlockState;
+            record.BrokenWall = score.BrokenWall;
+            record.FinishCorrectly = score.FinishCorrectly;
+            record.LiesCorrectly = score.LiesCorrectly;
+            record.LiesIncorrectly = score.LiesIncorrectly;
+            record.None = score.None;
+            record.PartiallyCorrect = score.PartiallyCorrect;
+            record.Saved = score.Saved;
+            record.StaysCorrectly = score.StaysCorrectly;
+            record.StaysIncorrectly = score.StaysIncorrectly;
+            record.TimeMils = score.TimeMils;
+            await _dbContext.SaveChangesAsync();
+            return Ok();
         }
     }
 }

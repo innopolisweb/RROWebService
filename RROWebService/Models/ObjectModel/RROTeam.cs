@@ -1,11 +1,15 @@
-﻿namespace RROWebService.Models.ObjectModel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RROWebService.Models.ObjectModel
 {
     public class RROTeam
     {
         /// <summary>
         /// Team identificator specifing team's category
         /// </summary>
-        public string Id { get; set; }
+        
+        [Key]
+        public string TeamId { get; set; }
 
         /// <summary>
         /// Tour that current team participating
@@ -20,6 +24,7 @@
         /// <summary>
         /// Category identifier for the current team
         /// </summary>
+        
         public string CategoryId { get; set; }
     }
 }

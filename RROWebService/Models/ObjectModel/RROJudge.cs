@@ -1,11 +1,14 @@
-﻿namespace RROWebService.Models.ObjectModel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RROWebService.Models.ObjectModel
 {
     public class RROJudge
     {
         /// <summary>
         /// Unique identifier for judge
         /// </summary>
-        public string Id { get; set; }
+        [Key]
+        public string JudgeId { get; set; }
 
         /// <summary>
         /// Judge's name

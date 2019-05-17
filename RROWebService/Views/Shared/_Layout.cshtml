@@ -2,54 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ScoreBoard</title>
+    <title>Scoreboard</title>
 
-    <!--This is import of the MDL to the UI part of thr project-->
-    <!--Second link responsible for page color theme "material.{primary}-{accent}.min.css"-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/css/layout.css">
+    <link rel="stylesheet" href="~/css/table.css">
+
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-red.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
-    <!--This is my own stylesheet-->
-    <link rel="stylesheet" href="~/css/layout.css" />
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
-        <!-- Header container -->
-        <header class="mdl-layout__header mdl-color--grey-200 mdl-color-text--grey-800">
 
-            <!--Header has only one row with data {Tour} {Polygon} {Category} -->
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title" id="header-field-tour">Tour: @ViewData["Tour"]</span>
-                <div class="mdl-layout-spacer"></div>
-                <span class="mdl-layout-title" id="header-field-polygon">Polygon: @ViewData["Polygon"]</span>
-                <div class="mdl-layout-spacer"></div>
-                <span class="mdl-layout-title" id="header-field-category">Category: @ViewData["Category"]</span>
-            </div>
-        </header>
+<div id="header">
+    <div><p id="header-field-tour">Tour: @ViewData["Tour"]</p></div>
+    <div><p id="header-field-polygon">Polygon: @ViewData["Polygon"]</p></div>
+    <div><p id="header-field-category">Category: @ViewData["Category"]</p></div>
+</div>
 
-        <!-- Table container -->
-        <main class="mdl-layout__content">
-            <table>
-                @RenderBody()
-            </table>
-        </main>
+<div id="content">
+    <table class="mdl-data-table">
+        <thead>
+            @RenderSection("THeader")
+        </thead>
+        
+        <tbody>
+            @RenderBody()
+        </tbody>
+    </table>
+</div>
+
+<div id="footer">
+    <div>
+        <p>
+            @ViewData["JudgeName"]
+        </p>
     </div>
+    <div>
+        <button id="footer-field-submitbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
+            Submit
+        </button>
+    </div>
+</div>
 
-    <!-- MDL Mini Footer Container-->
-    <footer class="mdl-mini-footer mdl-color--grey-200">
-
-        <!-- MDL Footer left Section, responsible for judge full name -->
-        <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo mdl-color-text--grey-800" id="footer-field-fullname">@ViewData["JudgeName"]</div>
-        </div>
-
-        <!-- MDL Footer right Section, responsible for "Submit" button -->
-        <div class="mdl-mini-footer__right-section">
-            <button id="footer-field-submitbtn" class="mdl-button mdl-js-button mdl-button--raised mdl-color--green-500">
-                Submit
-            </button>
-        </div>
-    </footer>
 </body>
 </html>
