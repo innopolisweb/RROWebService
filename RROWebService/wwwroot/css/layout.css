@@ -30,6 +30,15 @@ body {
     margin-top: 1.2%;
 }
 
+#header-field-logout {
+    float: right;
+    margin-top: 1%;
+    margin-right: 5%;
+
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
 /* Content properties */
 #content {
     overflow: scroll;
