@@ -45,7 +45,7 @@ namespace RROWebService.Controllers
             var teamList = JsonConvert.DeserializeObject<List<RROTeam>>(teamsSerialized);
 
             var vmAdapted = from team in teamList
-                select new Form1Item { Team = team.Id, Category = team.CategoryId };
+                select new Form1Item { Team = team.TeamId, Category = team.CategoryId };
 
             vm.JudgeName = judge.Name;
             vm.Polygon = judge.Polygon;

@@ -1,12 +1,16 @@
 ﻿@model RROWebService.Models.From1.Form1ViewModel
 <!-- 2018 year cvalification tour table header form -->
 <!-- Table header form -->
-<div id="table-header">
+
+@section THeader 
+{
+    <!-- 2018 year cvalification tour table header form -->
+
     <!-- First row of the headers -->
     <tr>
         <th colspan="1"></th>
         <th colspan="12" scope="colgroup">Свежий фрукт</th>
-        <th colspan="8" scope="colgroup" id="first">Незрелый фрукт</th>
+        <th colspan="8" scope="colgroup">Незрелый фрукт</th>
         <th colspan="8" scope="colgroup">Неприглядный фрукт</th>
         <th colspan="8" scope="colgroup">Испорченный фрукт</th>
         <th colspan="2" scope="colgroup">Стена</th>
@@ -64,7 +68,8 @@
 
         <th>Подпись участника</th>
     </tr>
-</div>
+    
+}
 
 @foreach (var team in Model.Items)
 {
