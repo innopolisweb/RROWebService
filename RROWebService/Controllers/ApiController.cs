@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RROWebService.Models;
-using RROWebService.Models.Categories.Oml;
 using RROWebService.Models.ObjectModel;
 using RROWebService.Services;
+using OmlScore = RROWebService.Models.ObjectModel.OmlScore;
 
 namespace RROWebService.Controllers
 {
@@ -32,12 +33,29 @@ namespace RROWebService.Controllers
             {
                 return Unauthorized();
             }
-            var jugde = getJudge.First();
-            if (!jugde.Pass.Equals(pass)) return Unauthorized();
+            var tjudge = getJudge.First();
+            if (!tjudge.Pass.Equals(pass)) return Unauthorized();
 
             var token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
             return Ok(token);
 
+        }
+
+        public IActionResult Reauthorize(string judgeId)
+        {
+            var getJudge = from judge in _dbContext.Judges
+                where judge.JudgeId == judgeId
+                select judge;
+
+            if (!getJudge.Any())
+            {
+                return Unauthorized();
+            }
+            var tjudge = getJudge.First();
+            var pass = tjudge.Pass;
+
+            var token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
+            return Ok(token);
         }
 
         [HttpGet]
@@ -74,9 +92,32 @@ namespace RROWebService.Controllers
 
         public async Task<IActionResult> OmlResult([FromBody] OmlScore score)
         {
-            if (!Request.Cookies.ContainsKey("judgeid") || !Request.Cookies.ContainsKey("token"))
+            if (!Request.Cookies.ContainsKey("judgeid"))
                 return Unauthorized();
 
+            var judgeId = Request.Cookies["judgeid"];
+            int token;
+            if (!Request.Cookies.ContainsKey("token") 
+                || Request.Cookies.ContainsKey("token") && JudgeAuthorizationFactory.CheckValidation(Int32.Parse(Request.Cookies["token"])) == JudgeTokenValidation.Expired)
+            {
+                var pass = (from j in _dbContext.Judges
+                    where j.JudgeId == judgeId
+                    select j.Pass).First();
+
+                token = JudgeAuthorizationFactory.AuthorizeOrRenew(judgeId, pass);
+                Response.Cookies.Append("token", token.ToString(), new CookieOptions
+                {
+                    IsEssential = true,
+                    Expires = DateTime.Now + TimeSpan.FromMinutes(40)
+                });
+            }
+            else
+            {
+                token = Int32.Parse(Request.Cookies["token"]);
+            }
+
+            if (JudgeAuthorizationFactory.CheckValidation(token) == JudgeTokenValidation.Invalid)
+                return Unauthorized();
 
             var teamInBase = from it in _dbContext.OMLScoreBoard
                 where it.Round == score.Round
@@ -85,6 +126,7 @@ namespace RROWebService.Controllers
 
             if (!teamInBase.Any())
             {
+                score.JudgeId = judgeId;
                 await _dbContext.OMLScoreBoard.AddAsync(score);
                 await _dbContext.SaveChangesAsync();
                 return Ok();
@@ -93,6 +135,7 @@ namespace RROWebService.Controllers
             var record = teamInBase.First();
             if (record.Saved == 1) return Forbid();
 
+            record.JudgeId = judgeId;
             record.BlackBlockState = score.BlackBlockState;
             record.BlueBlockState = score.BlueBlockState;
             record.BrokenWall = score.BrokenWall;

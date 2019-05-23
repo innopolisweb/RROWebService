@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RROWebService.Models.Categories.Oml;
 using RROWebService.Models.ObjectModel;
-using RROWebService.Models.Primitives;
+using RROWebService.Models.ObjectModel.Primitives;
 
 namespace RROWebService.Models
 {
@@ -19,5 +18,7 @@ namespace RROWebService.Models
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<OmlScore> OMLScoreBoard { get; set; }
+
+        public DbSet<CurrentRound> CurrentRound { get; set; }
     }
 }

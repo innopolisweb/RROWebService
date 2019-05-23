@@ -9,10 +9,28 @@ namespace RROWebService.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (Request.Cookies.ContainsKey("token"))
-                return RedirectToAction("Index", "ScoreBoard");
+            if (Request.Cookies.ContainsKey("token") && Request.Cookies.ContainsKey("judgeid"))
+            {
+                var judgeId = Request.Cookies["judgeid"];
+                var response =
+                    await new HttpClient().GetAsync($"http://localhost:5000/api/reauthorize?judgeId={judgeId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var token = await response.Content.ReadAsStringAsync();
+                    Response.Cookies.Delete("token");
+                    Response.Cookies.Append("token", token, new CookieOptions
+                    {
+                        IsEssential = true,
+                        Expires = DateTime.Now + TimeSpan.FromMinutes(40),
+                    });
+                    return RedirectToAction("Index", "ScoreBoard");
+                }
+            }
+
             return View(new AuthorizationViewModel());
         }
 
@@ -39,12 +57,12 @@ namespace RROWebService.Controllers
                 Response.Cookies.Append("token", token, new CookieOptions
                 {
                     IsEssential = true,
-                    Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(40),
+                    Expires = DateTime.Now + TimeSpan.FromMinutes(40),
                 });
                 Response.Cookies.Append("judgeid", judgeid, new CookieOptions
                 {
                     IsEssential = true,
-                    Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(40)
+                    Expires = DateTimeOffset.MaxValue
                 });
 
                 return RedirectToAction("Index", "ScoreBoard");

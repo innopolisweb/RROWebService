@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RROWebService.Models.Primitives
+namespace RROWebService.Models.ObjectModel.Primitives
 {
     public class Category
     {

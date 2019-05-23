@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Scoreboard</title>
+    <title>@ViewData["Category"] - ScoreBoard</title>
 
     <link rel="stylesheet" href="~/css/layout.css">
     <link rel="stylesheet" href="~/css/table.css">
@@ -13,19 +13,23 @@
 <body>
 
 <div id="header">
-    <div><p id="header-field-tour">Tour: @ViewData["Tour"]</p></div>
-    <div><p id="header-field-polygon">Polygon: @ViewData["Polygon"]</p></div>
-    <div><p id="header-field-category">Category: @ViewData["Category"]</p></div>
+    <div><p id="header-field-tour">Тур: @ViewData["Tour"]</p></div>
+    <div><p id="header-field-polygon">Полигон: @ViewData["Polygon"]</p></div>
+    <div><p id="header-field-category">Категория: @ViewData["Category"]</p></div>
+    <div><p id="header-field-round">Раунд: @ViewData["Round"]</p></div>
+    <button id="header-field-logout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
+        Log out
+    </button>
 </div>
 
 <div id="content">
     <table class="mdl-data-table">
         <thead>
-            @RenderSection("THeader")
+        @RenderSection("THeader")
         </thead>
-        
+
         <tbody>
-            @RenderBody()
+        @RenderBody()
         </tbody>
     </table>
 </div>
@@ -36,12 +40,7 @@
             @ViewData["JudgeName"]
         </p>
     </div>
-    <div>
-        <button id="footer-field-submitbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
-            Submit
-        </button>
-    </div>
 </div>
-
+    @RenderSection("Scripts")
 </body>
 </html>

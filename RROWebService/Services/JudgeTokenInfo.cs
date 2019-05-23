@@ -17,6 +17,7 @@ namespace RROWebService.Services
 
         private readonly string _judgeId;
         private readonly int _passHashCode;
+        private readonly int secure;
 
         private JudgeTokenInfo(string judgeId, string pass)
         {
@@ -24,12 +25,13 @@ namespace RROWebService.Services
             _passHashCode = pass.GetHashCode();
             CreationTime = DateTime.Now;
             EndingTime = CreationTime + TimeSpan.FromSeconds(1200);
+            secure = _judgeId.GetHashCode() & CreationTime.GetHashCode() & CreationTime.GetHashCode();
         }
 
         public JudgeTokenValidation Validate(int token)
         {
             var awaited = token ^ _passHashCode;
-            if (awaited == (_judgeId.GetHashCode() & CreationTime.GetHashCode() & EndingTime.GetHashCode()))
+            if (awaited == secure)
             {
                 return EndingTime > DateTime.Now ? JudgeTokenValidation.Valid : JudgeTokenValidation.Expired;
             }
@@ -39,7 +41,7 @@ namespace RROWebService.Services
 
         public int GetToken()
         {
-            return (_judgeId.GetHashCode() & CreationTime.GetHashCode() & CreationTime.GetHashCode()) ^ _passHashCode;
+            return _passHashCode ^ secure;
         }
 
         public static JudgeTokenInfo CreateTokenInstance(string judgeId, string pass)

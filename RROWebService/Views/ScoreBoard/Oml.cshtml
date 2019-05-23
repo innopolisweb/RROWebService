@@ -1,0 +1,344 @@
+﻿@model RROWebService.Models.Categories.Oml.OmlViewModel
+
+@section THeader
+{
+    <tr>
+        <th colspan="1">Команда</th>
+        <th colspan="6">Пассажиры, кроме синего</th>
+        <th colspan="1" scope="colgroup">Синий</th>
+        <th colspan="1" scope="colgroup">Черный блок</th>
+        <th colspan="2" scope="colgroup">Штраф</th>
+        <th colspan="1" scope="colgroup">Время</th>
+        <th colspan="1" scope="colgroup">Подпись участника</th>
+    </tr>
+
+    <tr>
+        <th></th>
+
+
+        <th>Стоит полностью в верной зоне</th>
+        <th>Лежит полностью в верной зоне</th>
+        <th>Частично в верной зоне
+            (не важно лежит или стоит)</th>
+        <th>Стоит полностью в НЕверной зоне*</th>
+        <th>Лежит полностью в НЕверной зоне*</th>
+        <th>Не подходит ни под один критерий</th>
+
+        <th></th>
+
+        <th></th>
+
+        <th>Робот полностью остановился в зоне </th>
+        <th>Стена повреждена / смещена</th>
+
+        <th></th>
+
+        <th></th>
+    </tr>
+}
+
+@foreach (var team in Model.Teams)
+{
+    <tr>
+        <td>@team.TeamId</td>
+
+        <!-- ========================= "All except for blue one" fields ========================= -->
+        <!-- Stays fully in the right zone -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.StaysCorrectly" @{
+                                                                                                              if (team.Saved == 1)
+                                                                                                              {
+                                                                                                                  @: disabled
+                                                                                                              }
+                                                                                                          }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+        <!-- Lays fully in the right zone -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.LiesCorrectly" @{
+                                                                                                             if (team.Saved == 1)
+                                                                                                             {
+                                                                                                                 @: disabled
+                                                                                                             }
+                                                                                                         }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+        <!-- Partially in the right zone -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.PartiallyCorrect" @{
+                                                                                                                if (team.Saved == 1)
+                                                                                                                {
+                                                                                                                    @: disabled
+                                                                                                                }
+                                                                                                            }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+        <!-- Stays fully in NOT rigth zone -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.StaysIncorrectly" @{
+                                                                                                                if (team.Saved == 1)
+                                                                                                                {
+                                                                                                                    @: disabled
+                                                                                                                }
+                                                                                                            }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+        <!-- Lays fully in NOT rigth zone -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.LiesIncorrectly" 
+                       @{
+                           if (team.Saved == 1)
+                           {
+                               @: disabled
+                           }
+                       }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+        <!-- Do not match any criterium above -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.None" @{
+                                                                                                    if (team.Saved == 1)
+                                                                                                    {
+                                                                                                        @:disabled
+                                                                                                    }
+                                                                                                }>
+                <label class="mdl-textfield__label">Points..</label>
+            </div>
+        </td>
+
+
+        <!-- ========================= "Blue" fields ========================= -->
+        <td>
+            <div class="mdc-select">
+                <i class="mdc-select__dropdown-icon"></i>
+                <select class="@team.TeamId mdc-select__native-control" @{
+                                                                            if (team.Saved == 1)
+                                                                            {
+                                                                                @:disabled
+                                                                            }
+                                                                        }>
+                    <!option @{
+                                 if (team.BlueBlockState == 1)
+                                 {
+                                     @:selected
+                                 }
+                             }>Стоит в зел. зоне + касается синей исходной зоны или серого контура</!option>
+                    <!option @{
+                                 if (team.BlueBlockState == 0)
+                                 {
+                                     @:selected
+                                 }
+                             }>Не выполянет условия начисления баллов</!option>
+                </select>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </td>
+
+
+        <!-- ========================= "Black block" fields ========================= -->
+        <td>
+            <div class="mdc-select">
+                <i class="mdc-select__dropdown-icon"></i>
+                <select class="@team.TeamId mdc-select__native-control"@{
+                                                                           if (team.Saved == 1)
+                                                                           {
+                                                                               @: disabled
+                                                                           }
+                                                                       }>
+                    <!option @{
+                                 if (team.BlackBlockState == 2)
+                                 {
+                                     @:selected
+                                 }
+                             }>Полностью в зоне батареи</!option>
+                    <!option @{
+                                 if (team.BlackBlockState == 1)
+                                 {
+                                     @:selected
+                                 }
+                             }>Частично в зоне батареи</!option>
+                    <!option @{
+                                 if (team.BlackBlockState == 0)
+                                 {
+                                     @:selected
+                                 }
+                             }>Не в зоне</!option>
+                </select>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </td>
+
+        <!-- ========================= "Penalty" fields ========================= -->
+        <!-- Robot fully stopped in zone -->
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                <input type="checkbox" class="@team.TeamId mdl-checkbox__input" @{
+                                                                                    if (team.Saved == 1)
+                                                                                    {
+                                                                                        @:disabled
+                                                                                    }
+                                                                                } @{
+                                                                                      if (team.FinishCorrectly == 1)
+                                                                                      {
+                                                                                          @:checked
+                                                                                      }
+                                                                                  }>
+            </label>
+        </td>
+        <!-- Wall damaged -->
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="@team.TeamId mdl-checkbox__input" @{
+                                                                                    if (team.Saved == 1)
+                                                                                    {
+                                                                                        @:disabled
+                                                                                    }
+                                                                                } @{
+                                                                                      if (team.BrokenWall == 1)
+                                                                                      {
+                                                                                          @:checked
+                                                                                      }
+                                                                                  }>
+            </label>
+        </td>
+
+
+        <!-- ========================= "Time" fields ========================= -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.TimeMils" @{
+                                                                                                        if (team.Saved == 1)
+                                                                                                        {
+                                                                                                            @:disabled
+                                                                                                        }
+                                                                                                    }>
+                <label class="mdl-textfield__label">Time..</label>
+            </div>
+        </td>
+
+        <!-- ========================= "Participator signature" fields ========================= -->
+        <td>
+            <button class="@team.TeamId mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500" onclick="submitteam(this)" @{
+                                                                                                                                                             if (team.Saved == 1)
+                                                                                                                                                             {
+                                                                                                                                                                 @: disabled
+                                                                                                                                                             }
+                                                                                                                                                         }>
+                @{
+                    if (team.Saved == 1)
+                    {
+                        @: Сохранено
+                    }
+                    else
+                    {
+                        @: Сохранить
+                    }
+                }
+            </button>
+        </td>
+    </tr>
+
+}
+
+@section Scripts
+{
+    <script>
+        function submitteam(elem) {
+            elem.innerHTML = "Сохранение...";
+            var btclass = elem.classList[0];
+            var elements = document.getElementsByClassName(btclass);
+            var jsonbody = '{';
+            jsonbody += '"teamId":' + '"' + btclass + '"' + ',';
+            jsonbody += '"polygon":"@Model.Polygon",';
+            jsonbody += '"round":"@Model.CurrentRound",';
+            var element0 = (elements[0].value === "" ? 'null' : '"' + elements[0].value + '"');
+            var element1 = (elements[1].value === "" ? 'null' : '"' + elements[1].value + '"');
+            var element2 = (elements[2].value === "" ? 'null' : '"' + elements[2].value + '"');
+            var element3 = (elements[3].value === "" ? 'null' : '"' + elements[3].value + '"');
+            var element4 = (elements[4].value === "" ? 'null' : '"' + elements[4].value + '"');
+            var element5 = (elements[5].value === "" ? 'null' : '"' + elements[5].value + '"');
+            var element10 = (elements[10].value === "" ? 'null' : '"' + elements[10].value + '"');
+
+            jsonbody += '"staysCorrectly":' + element0 + ',';
+            jsonbody += '"liesCorrectly":' + element1 + ',';
+            jsonbody += '"partiallyCorrect":' + element2 + ',';
+            jsonbody += '"staysIncorrectly":' + element3 + ',';
+            jsonbody += '"liesIncorrectly":' + element4 + ',';
+            jsonbody += '"none":' + element5 + ',';
+
+            if (elements[6].value === "Стоит в зел. зоне + касается синей исходной зоны или серого контура")
+                jsonbody += '"blueBlockState":"1",';
+            else if (elements[6].value === "Не выполянет условия начисления баллов")
+                jsonbody += '"blueBlockState":"0",';
+            else jsonbody += '"blueBlockState":null,';
+
+            if (elements[7].value === "Полностью в зоне батареи")
+                jsonbody += '"blackBlockState":"2",';
+            else if (elements[7].value === "Частично в зоне батареи")
+                jsonbody += '"blackBlockState":"1",';
+            else if (elements[7].value === "Не в зоне")
+                jsonbody += '"blackBlockState":"0",';
+            else jsonbody += '"blackBlockState":null,';
+
+
+            if (elements[8].parentNode.classList.contains("is-checked"))
+                jsonbody += '"finishCorrectly":"1",';
+            else jsonbody += '"finishCorrectly":"0",';
+
+            if (elements[9].parentNode.classList.contains("is-checked"))
+                jsonbody += '"brokenWall":"1",';
+            else jsonbody += '"brokenWall":"0",';
+
+            jsonbody += '"timeMils":' + element10 + ',';
+            jsonbody += '"saved":"1"}';
+
+            console.log(jsonbody);
+
+            //post request
+            var reqest = new XMLHttpRequest();
+            reqest.open("post", "http://localhost:5000/api/omlResult", true);
+            reqest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            reqest.onreadystatechange = function () {
+                switch (reqest.readyState) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        elem.innerHTML = "Сохранение...";
+                        break;
+                    case 4:
+                        if (reqest.status === 200) {
+                            elem.innerHTML = "Сохранено";
+                            elem.disabled = true;
+                            elements[0].disabled = true;
+                            elements[1].disabled = true;
+                            elements[2].disabled = true;
+                            elements[3].disabled = true;
+                            elements[4].disabled = true;
+                            elements[5].disabled = true;
+                            elements[6].disabled = true;
+                            elements[7].disabled = true;
+                            elements[8].disabled = true;
+                            elements[9].disabled = true;
+                            elements[10].disabled = true;
+                        } else {
+                            alert("Error occured");
+                            elem.innerHTML = "Сохранить";
+                        }
+                        break;
+                }
+            };
+            reqest.send(jsonbody);
+        }
+    </script>
+}
