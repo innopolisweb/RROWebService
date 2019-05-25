@@ -1,0 +1,38 @@
+body {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    height: 100%;
+    display: flex;
+}
+
+.table-wrapper {
+    max-height: 100%;
+    overflow: scroll;
+}
+
+.mdl-layout__header-row span {
+    margin-right: 3%;
+}
+
+.mdl-layout__header-row #header-field-logout {
+    font-weight: bold;
+    color: white;
+}
+
+.snackbar {
+    text-align: center;
+    visibility: hidden;
+    z-index: 3;
+    position: fixed;
+
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+    margin-bottom: 5%;
+    padding: 10px;
+
+    bottom: 0;
+    left: 35%;
+    width: 30%;
+}
+
