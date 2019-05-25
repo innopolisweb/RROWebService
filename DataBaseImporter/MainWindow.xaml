@@ -3,10 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DataBaseImporter"
+        xmlns:local="clr-namespace:DataBaseImporter.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:helpers="clr-namespace:DataBaseImporter.Helpers"
+        Title="Team importer" Height="400" Width="600" Loaded="MainWindowOnLoaded" Name="MainW">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <helpers:InvertBoolConverter x:Key="InvertBoolConverter"></helpers:InvertBoolConverter>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Width="150" HorizontalAlignment="Left" Command="{Binding EnterSheetIdCommand}" CommandParameter="{Binding ElementName=MainW}" IsEnabled="{Binding InitializeServiceCommand.IsExecuting, Converter={StaticResource InvertBoolConverter}}">Выбрать таблицу</Button>
+        <Label HorizontalContentAlignment="Center" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center">Команды</Label>
+        <DataGrid Grid.Column="0" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Auto"></DataGrid>
+        <Label Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Судьи на квалификационный</Label>
+        <DataGrid Grid.Column="1" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesCv}" VerticalScrollBarVisibility="Auto"></DataGrid>
+        <Label Grid.Column="2" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Судьи на финал</Label>
+        <DataGrid Grid.Column="2" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesFin}" VerticalScrollBarVisibility="Auto"></DataGrid>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Width="150" IsEnabled="{Binding ReadyForDb}" Command="{Binding FillDbCommand}" CommandParameter="{Binding ElementName=MainW}">Записать в базу данных</Button>
     </Grid>
 </Window>
