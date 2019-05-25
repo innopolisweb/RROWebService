@@ -77,6 +77,12 @@
     <Reference Include="JetBrains.Annotations, Version=2018.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.2018.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.1.1345, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
@@ -271,6 +277,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\AsyncCommand.cs" />
+    <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\Command.cs" />
     <Compile Include="Helpers\InvertBoolConverter.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />

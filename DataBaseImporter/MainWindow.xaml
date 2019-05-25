@@ -4,21 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBaseImporter.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         xmlns:helpers="clr-namespace:DataBaseImporter.Helpers"
-        Title="Team importer" Height="400" Width="600" Loaded="MainWindowOnLoaded" Name="MainW">
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Title="Team importer" Height="500" Width="1100" Loaded="MainWindowOnLoaded" Name="MainW">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <helpers:InvertBoolConverter x:Key="InvertBoolConverter"></helpers:InvertBoolConverter>
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></helpers:BoolToVisibilityConverter>
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -26,13 +32,71 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Width="150" HorizontalAlignment="Left" Command="{Binding EnterSheetIdCommand}" CommandParameter="{Binding ElementName=MainW}" IsEnabled="{Binding InitializeServiceCommand.IsExecuting, Converter={StaticResource InvertBoolConverter}}">Выбрать таблицу</Button>
-        <Label HorizontalContentAlignment="Center" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center">Команды</Label>
-        <DataGrid Grid.Column="0" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Auto"></DataGrid>
-        <Label Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Судьи на квалификационный</Label>
-        <DataGrid Grid.Column="1" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesCv}" VerticalScrollBarVisibility="Auto"></DataGrid>
-        <Label Grid.Column="2" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Судьи на финал</Label>
-        <DataGrid Grid.Column="2" Grid.Row="2" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesFin}" VerticalScrollBarVisibility="Auto"></DataGrid>
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Width="150" IsEnabled="{Binding ReadyForDb}" Command="{Binding FillDbCommand}" CommandParameter="{Binding ElementName=MainW}">Записать в базу данных</Button>
+        <Button Grid.Row="0" Grid.Column="0" Margin="10" 
+                Width="150" HorizontalAlignment="Left" Command="{Binding EnterSheetIdCommand}" 
+                CommandParameter="{Binding ElementName=MainW}" 
+                IsEnabled="{Binding IsLoading, Converter={StaticResource InvertBoolConverter}}">
+            Выбрать таблицу
+        </Button>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock VerticalAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                       HorizontalAlignment="Right">Загрука даных</TextBlock>
+            <ProgressBar IsIndeterminate="True" Style="{DynamicResource MaterialDesignCircularProgressBar}"
+                         Margin="10 0 0 0"></ProgressBar>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding IsSending, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock VerticalAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                       HorizontalAlignment="Right">Запись в базу данных</TextBlock>
+            <ProgressBar IsIndeterminate="True" Style="{DynamicResource MaterialDesignCircularProgressBar}"
+                         Margin="10 0 0 0"></ProgressBar>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsLoadingError, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock FontWeight="Bold" Foreground="Red" TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" TextWrapping="Wrap" Text="Таблицы с заданным Id не существует"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsSendingError, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock FontWeight="Bold" Foreground="Red" TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" TextWrapping="Wrap" Text="Произошла ошибка при отправке"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Sent, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock FontWeight="Bold" Foreground="Green" TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" TextWrapping="Wrap" Text="Успешно"/>
+        </StackPanel>
+        <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="5" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5"
+                           Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}">Команды</TextBlock>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding Teams}" IsReadOnly="True"></DataGrid>
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="1" Grid.Column="1" Margin="5" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5"
+                           Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}">Судьи на квалификационный</TextBlock>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesCv}" IsReadOnly="True"></DataGrid>
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="1" Grid.Column="2" Margin="5" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5"
+                           Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}">Судьи на финал</TextBlock>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="True" Margin="5" ItemsSource="{Binding JudgesFin}" IsReadOnly="True"></DataGrid>
+            </Grid>
+
+        </materialDesign:Card>
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Width="250" 
+                IsEnabled="{Binding ReadyForDb}" Command="{Binding FillDbCommand}" 
+                CommandParameter="{Binding ElementName=MainW}">Записать в базу данных</Button>
     </Grid>
 </Window>

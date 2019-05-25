@@ -21,11 +21,16 @@ namespace DataBaseImporter.ViewModels
         private string _sheetId;
         private SheetsService _service;
         private bool _readyForDb;
+        private bool _isLoading;
+        private bool _isSending;
+        private bool _isLoadingError;
+        private bool _isSendingError;
+        private bool _sent;
 
         public MainViewModel()
         {
 
-            EnterSheetIdCommand = new Command(GetSheetId);
+            EnterSheetIdCommand = new Command(GetSheetId, o => !IsLoading);
             InitializeServiceCommand = new AsyncCommand(Initialize);
             RecieveDataCommand = new AsyncCommand(RecieveData);
             FillDbCommand = new AsyncCommand(FillDb);
@@ -52,9 +57,59 @@ namespace DataBaseImporter.ViewModels
         public bool ReadyForDb
         {
             get => _readyForDb;
-            set
+            private set
             {
                 _readyForDb = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            private set
+            {
+                _isLoading = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSending
+        {
+            get => _isSending;
+            private set
+            {
+                _isSending = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsLoadingError
+        {
+            get => _isLoadingError;
+            private set
+            {
+                _isLoadingError = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSendingError
+        {
+            get => _isSendingError;
+            private set
+            {
+                _isSendingError = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Sent
+        {
+            get => _sent;
+            set
+            {
+                _sent = value;
                 OnPropertyChanged();
             }
         }
@@ -63,9 +118,16 @@ namespace DataBaseImporter.ViewModels
 
         private void GetSheetId(object obj)
         {
+            Sent = false;
+
             var dialog = new SheetIdWindow {Owner = (Window) obj};
             dialog.ShowDialog();
             _sheetId = dialog.SheetId;
+
+            if (String.IsNullOrWhiteSpace(_sheetId))
+            {
+                return;
+            }
             
             try
             {
@@ -73,14 +135,17 @@ namespace DataBaseImporter.ViewModels
             }
             catch (Exception)
             {
-                MessageBox.Show("Таблицы с заданным ID не существует", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                IsLoadingError = true;
                 return;
             }
+
             RecieveDataCommand.Execute(null);
         }
 
         private void Initialize(object obj)
         {
+            Sent = false;
+            IsLoading = true;
             var cred = GoogleWebAuthorizationBroker.AuthorizeAsync(
                 GoogleClientSecrets.Load(new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.ClientId)))
                     .Secrets,
@@ -91,10 +156,13 @@ namespace DataBaseImporter.ViewModels
                 HttpClientInitializer = cred,
                 ApplicationName = "DATABASEInitializer"
             });
+            IsLoading = false;
         }
 
         private void RecieveData(object obj)
         {
+            IsLoading = true;
+
             RecieveDataCommand.ReportProgress(() =>
             {
                 Teams.Clear();
@@ -160,7 +228,7 @@ namespace DataBaseImporter.ViewModels
             }
 
             ReadyForDb = true;
-
+            IsLoading = false;
         }
 
         private void FillDb(object obj)
@@ -168,7 +236,7 @@ namespace DataBaseImporter.ViewModels
             ReadyForDb = false;
 
             var context = new MainContext();
-            bool res = false;
+            var res = false;
             FillDbCommand.ReportProgress(() =>
             {
                 var confirmation = new RefillBaseConfirmationWindow
@@ -186,15 +254,30 @@ namespace DataBaseImporter.ViewModels
                 return;
             }
 
-            context.Teams.RemoveRange(context.Teams.ToList());
-            context.JudgesCv.RemoveRange(context.JudgesCv.ToList());
-            context.JudgesFin.RemoveRange(context.JudgesFin.ToList());
-            context.SaveChanges();
+            IsSending = true;
+            try
+            {
+                context.Teams.RemoveRange(context.Teams.ToList());
+                context.JudgesCv.RemoveRange(context.JudgesCv.ToList());
+                context.JudgesFin.RemoveRange(context.JudgesFin.ToList());
+                context.SaveChanges();
 
-            context.Teams.AddRange(Teams);
-            context.JudgesCv.AddRange(JudgesCv);
-            context.JudgesFin.AddRange(JudgesFin);
-            context.SaveChanges();
+                context.Teams.AddRange(Teams);
+                context.JudgesCv.AddRange(JudgesCv);
+                context.JudgesFin.AddRange(JudgesFin);
+                context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                IsSendingError = true;
+                IsSending = false;
+                ReadyForDb = true;
+                return;
+            }
+
+            IsSending = false;
+            ReadyForDb = true;
+            Sent = true;
         }
 
         [NotifyPropertyChangedInvocator]

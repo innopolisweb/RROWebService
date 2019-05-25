@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DataBaseImporter
 {
@@ -15,6 +17,11 @@ namespace DataBaseImporter
         {
             SheetId = IdTextBox.Text;
             Close();
+        }
+
+        private void IdTextBoxOnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            OkButton.IsEnabled = !String.IsNullOrWhiteSpace(IdTextBox.Text);
         }
     }
 }

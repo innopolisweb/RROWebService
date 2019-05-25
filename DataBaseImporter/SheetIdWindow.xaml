@@ -4,16 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        MaxHeight="85" MinHeight="85" MaxWidth="400" MinWidth="400"
         ShowInTaskbar="False" WindowStyle="ToolWindow"
         WindowStartupLocation="CenterOwner"
-        Title="Введите Id таблицы" Height="85" Width="400">
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        ResizeMode="NoResize"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Title="Введите Id таблицы" Height="100" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="75"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0" Margin="10" Name="IdTextBox"></TextBox>
-        <Button Grid.Column="1" Margin="10" Click="OkOnClick">Ок</Button>
+        <TextBox Grid.Column="0" Margin="10" Name="IdTextBox" TextChanged="IdTextBoxOnTextChanged"></TextBox>
+        <Button Grid.Column="1" Margin="10" Name="OkButton" Click="OkOnClick" IsEnabled="False">Ок</Button>
     </Grid>
 </Window>
