@@ -7,8 +7,6 @@ namespace DataBaseImporter.Models
         [Key]
         public string TeamId { get; set; }
         public int Polygon { get; set; }
-        public string CategoryId { get; set; }
-        public string Tour { get; set; }
-        
+        public string Category { get; set; }        
     }
 }

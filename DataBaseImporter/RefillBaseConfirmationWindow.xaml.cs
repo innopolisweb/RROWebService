@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DataBaseImporter
 {
@@ -27,6 +28,14 @@ namespace DataBaseImporter
         private void ConfirmationOnTextChanged(object sender, TextChangedEventArgs e)
         {
             OkButton.IsEnabled = ConfirmationTextBox.Text == "очистить базу данных";
+        }
+
+        private void RefillBaseConfirmationWindowOnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OkOnClick(sender, null);
+            }
         }
     }
 }

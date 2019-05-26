@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DataBaseImporter
 {
@@ -22,6 +23,12 @@ namespace DataBaseImporter
         private void IdTextBoxOnTextChanged(object sender, TextChangedEventArgs e)
         {
             OkButton.IsEnabled = !String.IsNullOrWhiteSpace(IdTextBox.Text);
+        }
+
+        private void SheetIdWindowOnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                OkOnClick(sender, null);
         }
     }
 }

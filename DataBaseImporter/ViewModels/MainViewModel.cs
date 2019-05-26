@@ -180,13 +180,15 @@ namespace DataBaseImporter.ViewModels
                 var data = teamIds.Values[i][0].ToString().Trim().Split('-');
                 var i1 = i;
                 InitializeServiceCommand.ReportProgress(() =>
-                Teams.Add(new RROTeam
                 {
-                    TeamId = teamIds.Values[i1][0].ToString().Trim(),
-                    Polygon = Int32.Parse(polygons.Values[i1][0].ToString().Trim()),
-                    CategoryId = data[0],
-                    Tour = "Квалификационный"
-                }));
+                    var parsed = Int32.TryParse(polygons.Values[i1][0].ToString().Trim(), out var res);
+                    Teams.Add(new RROTeam
+                    {
+                        TeamId = teamIds.Values[i1][0].ToString().Trim(),
+                        Polygon = parsed ? res : 0,
+                        Category = data[0],
+                    });
+                });
             }
 
             var judgeCvIds = _service.Spreadsheets.Values.Get(_sheetId, "JudgesCv!A:A").Execute();
@@ -199,13 +201,16 @@ namespace DataBaseImporter.ViewModels
 
                 var i1 = i;
                 RecieveDataCommand.ReportProgress(() =>
-                JudgesCv.Add(new RROJudgeCv
                 {
-                    JudgeId = judgeCvIds.Values[i1][0].ToString().Trim(),
-                    Polygon = Int32.Parse(judgeCvPolygons.Values[i1][0].ToString().Trim()),
-                    Pass = judgeCvPass.Values[i1][0].ToString(),
-                    JudgeName = judgeCvNames.Values[i1][0].ToString().Trim(),
-                }));
+                    var parsed = Int32.TryParse(judgeCvPolygons.Values[i1][0].ToString().Trim(), out var res);
+                    JudgesCv.Add(new RROJudgeCv
+                    {
+                        JudgeId = judgeCvIds.Values[i1][0].ToString().Trim(),
+                        Polygon = parsed ? res : 0,
+                        Pass = judgeCvPass.Values[i1][0].ToString(),
+                        JudgeName = judgeCvNames.Values[i1][0].ToString().Trim(),
+                    });
+                });
             }
 
             var judgeFinIds = _service.Spreadsheets.Values.Get(_sheetId, "JudgesFin!A:A").Execute();
@@ -218,13 +223,16 @@ namespace DataBaseImporter.ViewModels
 
                 var i1 = i;
                 RecieveDataCommand.ReportProgress(() =>
-                JudgesFin.Add(new RROJudgeFin
                 {
-                    JudgeId = judgeFinIds.Values[i1][0].ToString().Trim(),
-                    Polygon = Int32.Parse(judgeFinPolygons.Values[i1][0].ToString().Trim()),
-                    Pass = judgeFinPass.Values[i1][0].ToString(),
-                    JudgeName = judgeFinNames.Values[i1][0].ToString().Trim(),
-                }));
+                    var parsed = Int32.TryParse(judgeFinPolygons.Values[i1][0].ToString().Trim(), out var res);
+                    JudgesFin.Add(new RROJudgeFin
+                    {
+                        JudgeId = judgeFinIds.Values[i1][0].ToString().Trim(),
+                        Polygon = parsed ? res : 0,
+                        Pass = judgeFinPass.Values[i1][0].ToString(),
+                        JudgeName = judgeFinNames.Values[i1][0].ToString().Trim(),
+                    });
+                });
             }
 
             ReadyForDb = true;
@@ -235,7 +243,6 @@ namespace DataBaseImporter.ViewModels
         {
             ReadyForDb = false;
 
-            var context = new MainContext();
             var res = false;
             FillDbCommand.ReportProgress(() =>
             {
@@ -257,12 +264,13 @@ namespace DataBaseImporter.ViewModels
             IsSending = true;
             try
             {
-                context.Teams.RemoveRange(context.Teams.ToList());
+                var context = new MainContext();
+                context.TeamsCv.RemoveRange(context.TeamsCv.ToList());
                 context.JudgesCv.RemoveRange(context.JudgesCv.ToList());
                 context.JudgesFin.RemoveRange(context.JudgesFin.ToList());
                 context.SaveChanges();
 
-                context.Teams.AddRange(Teams);
+                context.TeamsCv.AddRange(Teams);
                 context.JudgesCv.AddRange(JudgesCv);
                 context.JudgesFin.AddRange(JudgesFin);
                 context.SaveChanges();

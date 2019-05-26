@@ -12,7 +12,7 @@
         TextElement.FontSize="14"
         ResizeMode="NoResize"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Введите Id таблицы" Height="100" Width="400">
+        Title="Введите Id таблицы" Height="100" Width="400" KeyUp="SheetIdWindowOnKeyUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
