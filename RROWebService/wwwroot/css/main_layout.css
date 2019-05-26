@@ -28,11 +28,9 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 
-    margin-bottom: 5%;
     padding: 10px;
 
     bottom: 0;
-    left: 35%;
-    width: 30%;
+    left: 45%;
+    width: 10%;
 }
-
