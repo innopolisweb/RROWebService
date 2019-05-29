@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,9 +32,16 @@ namespace RROWebService
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CompetitionContext>(options => options.UseSqlServer(connection));
 
-
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            services.Configure<CookieTempDataProviderOptions>(opt =>
+            {
+                opt.Cookie.IsEssential = true;
+                opt.Cookie.Name = "data";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

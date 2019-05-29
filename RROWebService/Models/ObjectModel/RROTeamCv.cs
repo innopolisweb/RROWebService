@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RROWebService.Models.ObjectModel.Abstractions;
 
 namespace RROWebService.Models.ObjectModel
 {
-    public class RROTeam
+    public class RROTeamCv : RROTeam
     {
         /// <summary>
         /// Team identificator specifing team's category
@@ -10,11 +11,6 @@ namespace RROWebService.Models.ObjectModel
         
         [Key]
         public string TeamId { get; set; }
-
-        /// <summary>
-        /// Tour that current team participating
-        /// </summary>
-        public string Tour { get; set; }
 
         /// <summary>
         /// Index of the polygon team is binded to
@@ -25,6 +21,6 @@ namespace RROWebService.Models.ObjectModel
         /// Category identifier for the current team
         /// </summary>
         
-        public string CategoryId { get; set; }
+        public string Category { get; set; }
     }
 }

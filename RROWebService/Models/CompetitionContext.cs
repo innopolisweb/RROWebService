@@ -11,14 +11,18 @@ namespace RROWebService.Models
 
         }
 
-        public DbSet<RROTeam> Teams { get; set; }
+        public DbSet<RROTeamCv> TeamsCv { get; set; }
 
-        public DbSet<RROJudge> Judges { get; set; }
+        public DbSet<RROTeamFin> TeamsFin { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<RROJudgeCv> JudgesCv { get; set; }
+
+        public DbSet<RROJudgeFin> JudgesFin { get; set; }
 
         public DbSet<OmlScore> OMLScoreBoard { get; set; }
 
         public DbSet<CurrentRound> CurrentRound { get; set; }
+
+        public DbSet<CurrentTour> CurrentTour { get; set; }
     }
 }
