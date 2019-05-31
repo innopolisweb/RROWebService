@@ -5,7 +5,7 @@ namespace RROWebService.Models.ObjectModel
 {
     public class RROJudgeCv : RROJudge
     {
-        public string Pass { get; set; }
+        public string PassHash { get; set; }
 
     }
 }

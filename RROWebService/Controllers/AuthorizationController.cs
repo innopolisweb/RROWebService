@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +38,10 @@ namespace RROWebService.Controllers
             }
 
             var judgeId = vm.JudgeId.Trim();
-            var passHash = vm.Pass;                         //TODO replace {vm.Pass} with hash
+            var pass = vm.Pass;
+            var passBytes = Encoding.UTF8.GetBytes(pass);
+            var passHashBytes = MD5.Create().ComputeHash(passBytes);
+            var passHash = Convert.ToBase64String(passHashBytes);
 
             var response = await new HttpClient().GetAsync($"http://localhost:5000/api/authorize?judgeId={judgeId}&pass={passHash}");
             if (!response.IsSuccessStatusCode)

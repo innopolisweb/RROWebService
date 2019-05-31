@@ -41,7 +41,7 @@ namespace RROWebService.Controllers
                     }
 
                     var judgeCv = getJudgeCv.First();
-                    if (!judgeCv.Pass.Equals(pass)) return BadRequest("Incorrect password");
+                    if (!judgeCv.PassHash.Equals(pass)) return BadRequest("Incorrect password");
 
                     var payloadCv = JudgePayload.Create(judgeCv, 0);
                     var tokenCv = JWTJudgeProvider.CreateToken(payloadCv);
@@ -61,7 +61,7 @@ namespace RROWebService.Controllers
                     }
 
                     var judgeFin = getJudgeFin.First();
-                    if (!judgeFin.Pass.Equals(pass)) return BadRequest("Incorrect password");
+                    if (!judgeFin.PassHash.Equals(pass)) return BadRequest("Incorrect password");
 
                     var payloadFin = JudgePayload.Create(judgeFin, 1);
                     var tokenFin = JWTJudgeProvider.CreateToken(payloadFin);

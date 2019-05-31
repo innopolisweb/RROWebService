@@ -12,6 +12,7 @@ using RROWebService.Models.ObjectModel.Abstractions;
 
 namespace RROWebService.Controllers
 {
+    [Route("scoreboard")]
     public class ScoreBoardController : Controller
     {
         [HttpGet]
@@ -59,6 +60,7 @@ namespace RROWebService.Controllers
             }
         }
     
+        [Route("oml")]
         [HttpGet]
         public async Task<IActionResult> Oml()
         {
