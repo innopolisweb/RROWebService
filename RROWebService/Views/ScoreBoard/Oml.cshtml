@@ -1,258 +1,165 @@
 ﻿@model RROWebService.Models.Categories.Oml.OmlViewModel
 
 @section THeader
-{
-    <tr>
-        <th colspan="1">Команда</th>
-        <th colspan="6">Пассажиры, кроме синего</th>
-        <th colspan="1" scope="colgroup">Синий</th>
-        <th colspan="1" scope="colgroup">Черный блок</th>
-        <th colspan="2" scope="colgroup">Штраф</th>
-        <th colspan="1" scope="colgroup">Время</th>
-        <th colspan="1" scope="colgroup">Подпись участника</th>
-    </tr>
-
+    {
     <tr>
         <th></th>
 
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Пассажиры, кроме синего</th>
+        <th></th>
+        <th></th>
+
+        <th></th>
+
+        <th></th>
+
+        <th></th>
+        <th>Штраф</th>
+
+        <th></th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <th>Команда</th>
 
         <th>Стоит полностью в верной зоне</th>
         <th>Лежит полностью в верной зоне</th>
-        <th>Частично в верной зоне
-            (не важно лежит или стоит)</th>
+        <th>
+            Частично в верной зоне
+            (не важно лежит или стоит)
+        </th>
         <th>Стоит полностью в НЕверной зоне*</th>
         <th>Лежит полностью в НЕверной зоне*</th>
         <th>Не подходит ни под один критерий</th>
 
-        <th></th>
+        <th>Синий</th>
 
-        <th></th>
+        <th>Черный блок</th>
 
         <th>Робот полностью остановился в зоне </th>
         <th>Стена повреждена / смещена</th>
 
-        <th></th>
-
-        <th></th>
+        <th>Время</th>
+        <th>Подпись участника</th>
     </tr>
 }
 
 @foreach (var team in Model.Teams)
 {
     <tr>
+        <!-- ======================== "Команда" ======================== -->
         <td>@team.TeamId</td>
 
-        <!-- ========================= "All except for blue one" fields ========================= -->
-        <!-- Stays fully in the right zone -->
+        <!-- ======================== "Стоит полностью в верной зоне" ======================== -->
         <td>
             <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.StaysCorrectly" @{
-                                                                                                              if (team.Saved == 1)
-                                                                                                              {
-                                                                                                                  @: disabled
-                                                                                                              }
-                                                                                                          }>
-                <label class="mdl-textfield__label">Points..</label>
-            </div>
-        </td>
-        <!-- Lays fully in the right zone -->
-        <td>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.LiesCorrectly" @{
-                                                                                                             if (team.Saved == 1)
-                                                                                                             {
-                                                                                                                 @: disabled
-                                                                                                             }
-                                                                                                         }>
-                <label class="mdl-textfield__label">Points..</label>
-            </div>
-        </td>
-        <!-- Partially in the right zone -->
-        <td>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.PartiallyCorrect" @{
-                                                                                                                if (team.Saved == 1)
-                                                                                                                {
-                                                                                                                    @: disabled
-                                                                                                                }
-                                                                                                            }>
-                <label class="mdl-textfield__label">Points..</label>
-            </div>
-        </td>
-        <!-- Stays fully in NOT rigth zone -->
-        <td>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.StaysIncorrectly" @{
-                                                                                                                if (team.Saved == 1)
-                                                                                                                {
-                                                                                                                    @: disabled
-                                                                                                                }
-                                                                                                            }>
-                <label class="mdl-textfield__label">Points..</label>
-            </div>
-        </td>
-        <!-- Lays fully in NOT rigth zone -->
-        <td>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.LiesIncorrectly" 
-                       @{
-                           if (team.Saved == 1)
-                           {
-                               @: disabled
-                           }
-                       }>
-                <label class="mdl-textfield__label">Points..</label>
-            </div>
-        </td>
-        <!-- Do not match any criterium above -->
-        <td>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.None" @{
-                                                                                                    if (team.Saved == 1)
-                                                                                                    {
-                                                                                                        @:disabled
-                                                                                                    }
-                                                                                                }>
-                <label class="mdl-textfield__label">Points..</label>
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
             </div>
         </td>
 
-
-        <!-- ========================= "Blue" fields ========================= -->
+        <!-- ======================== "Лежит полностью в верной зоне" ======================== -->
         <td>
-            <div class="mdc-select">
-                <i class="mdc-select__dropdown-icon"></i>
-                <select class="@team.TeamId mdc-select__native-control" @{
-                                                                            if (team.Saved == 1)
-                                                                            {
-                                                                                @:disabled
-                                                                            }
-                                                                        }>
-                    <!option @{
-                                 if (team.BlueBlockState == 1)
-                                 {
-                                     @:selected
-                                 }
-                             }>Стоит в зел. зоне + касается синей исходной зоны или серого контура</!option>
-                    <!option @{
-                                 if (team.BlueBlockState == 0)
-                                 {
-                                     @:selected
-                                 }
-                             }>Не выполянет условия начисления баллов</!option>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+
+        <!-- ======================== "Частично в верной зоне (не важно лежит или стоит)" ======================== -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+
+        <!-- ======================== "Стоит полностью в НЕверной зоне*" ======================== -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+
+        <!-- ======================== "Лежит полностью в НЕверной зоне*" ======================== -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+
+        <!-- ======================== "Не подходит ни под один критерий" ======================== -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+
+        <!-- ======================== "Синий" ======================== -->
+        <td>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <select class="mdl-textfield__input">
+                    <option></option>
+                    <option>Стоит в зел. зоне + касается синей исходной зоны или серого контура</option>
+                    <option>Не выполянет условия начисления баллов</option>
                 </select>
-                <div class="mdc-line-ripple"></div>
+                <label class="mdl-textfield__label"></label>
             </div>
         </td>
 
-
-        <!-- ========================= "Black block" fields ========================= -->
+        <!-- ======================== "Черный блок" ======================== -->
         <td>
-            <div class="mdc-select">
-                <i class="mdc-select__dropdown-icon"></i>
-                <select class="@team.TeamId mdc-select__native-control"@{
-                                                                           if (team.Saved == 1)
-                                                                           {
-                                                                               @: disabled
-                                                                           }
-                                                                       }>
-                    <!option @{
-                                 if (team.BlackBlockState == 2)
-                                 {
-                                     @:selected
-                                 }
-                             }>Полностью в зоне батареи</!option>
-                    <!option @{
-                                 if (team.BlackBlockState == 1)
-                                 {
-                                     @:selected
-                                 }
-                             }>Частично в зоне батареи</!option>
-                    <!option @{
-                                 if (team.BlackBlockState == 0)
-                                 {
-                                     @:selected
-                                 }
-                             }>Не в зоне</!option>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <select class="mdl-textfield__input">
+                    <option></option>
+                    <option>Полностью в зоне батареи</option>
+                    <option>Частично в зоне батареи</option>
+                    <option>Не в зоне</option>
                 </select>
-                <div class="mdc-line-ripple"></div>
+                <label class="mdl-textfield__label"></label>
             </div>
         </td>
 
-        <!-- ========================= "Penalty" fields ========================= -->
-        <!-- Robot fully stopped in zone -->
-        <td>
-            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-                <input type="checkbox" class="@team.TeamId mdl-checkbox__input" @{
-                                                                                    if (team.Saved == 1)
-                                                                                    {
-                                                                                        @:disabled
-                                                                                    }
-                                                                                } @{
-                                                                                      if (team.FinishCorrectly == 1)
-                                                                                      {
-                                                                                          @:checked
-                                                                                      }
-                                                                                  }>
-            </label>
-        </td>
-        <!-- Wall damaged -->
+        <!-- ======================== "Штраф" ======================== -->
+        <!-- "Робот полностью остановился в зоне" -->
         <td>
             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-                <input type="checkbox" class="@team.TeamId mdl-checkbox__input" @{
-                                                                                    if (team.Saved == 1)
-                                                                                    {
-                                                                                        @:disabled
-                                                                                    }
-                                                                                } @{
-                                                                                      if (team.BrokenWall == 1)
-                                                                                      {
-                                                                                          @:checked
-                                                                                      }
-                                                                                  }>
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <!-- "Стена повреждена / смещена" -->
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
             </label>
         </td>
 
-
-        <!-- ========================= "Time" fields ========================= -->
+        <!-- ======================== "Время" ======================== -->
         <td>
             <div class="mdl-textfield mdl-js-textfield">
-                <input class="@team.TeamId mdl-textfield__input" type="text" value="@team.TimeMils" @{
-                                                                                                        if (team.Saved == 1)
-                                                                                                        {
-                                                                                                            @:disabled
-                                                                                                        }
-                                                                                                    }>
-                <label class="mdl-textfield__label">Time..</label>
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Время..</label>
             </div>
         </td>
 
-        <!-- ========================= "Participator signature" fields ========================= -->
+        <!-- ======================== "Подпись участника" ======================== -->
         <td>
-            <button class="@team.TeamId mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500" onclick="submitteam(this)" @{
-                                                                                                                                                             if (team.Saved == 1)
-                                                                                                                                                             {
-                                                                                                                                                                 @: disabled
-                                                                                                                                                             }
-                                                                                                                                                         }>
-                @{
-                    if (team.Saved == 1)
-                    {
-                        @: Сохранено
-                    }
-                    else
-                    {
-                        @: Сохранить
-                    }
-                }
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <div class="submit-btn">Сохранить</div>
             </button>
         </td>
     </tr>
-
 }
 
 @section Scripts
-{
+    {
     <script>
         function submitteam(elem) {
             elem.innerHTML = "Сохранение...";

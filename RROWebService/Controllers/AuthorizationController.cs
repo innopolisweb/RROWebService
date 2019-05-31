@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,28 +11,17 @@ namespace RROWebService.Controllers
 {
     public class AuthorizationController : Controller
     {
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            if (Request.Cookies.ContainsKey("token") && Request.Cookies.ContainsKey("judgeid"))
-            {
-                var judgeId = Request.Cookies["judgeid"];
-                var response =
-                    await new HttpClient().GetAsync($"http://localhost:5000/api/reauthorize?judgeId={judgeId}");
+            if (!Request.Cookies.ContainsKey("token"))
+                return View(new AuthorizationViewModel());
 
-                if (response.IsSuccessStatusCode)
-                {
+            var token = Request.Cookies["token"];
+            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/checktoken?token={token}");
+            var content = await response.Content.ReadAsStringAsync();
 
-                    var token = await response.Content.ReadAsStringAsync();
-                    Response.Cookies.Delete("token");
-                    Response.Cookies.Append("token", token, new CookieOptions
-                    {
-                        IsEssential = true,
-                        Expires = DateTime.Now + TimeSpan.FromMinutes(40),
-                    });
-                    return RedirectToAction("Index", "ScoreBoard");
-                }
-            }
-
+            if (content == "Valid") return RedirectToAction("Index", "ScoreBoard");
             return View(new AuthorizationViewModel());
         }
 
@@ -46,31 +37,27 @@ namespace RROWebService.Controllers
                 return View(vm);
             }
 
-            var judgeid = vm.JudgeId.Trim();
-            var response =
-                await new HttpClient().GetAsync($"http://localhost:5000/api/authorize?judgeId={judgeid}&pass={vm.Pass}");
+            var judgeId = vm.JudgeId.Trim();
+            var pass = vm.Pass;
+            var passBytes = Encoding.UTF8.GetBytes(pass);
+            var passHashBytes = MD5.Create().ComputeHash(passBytes);
+            var passHash = Convert.ToBase64String(passHashBytes);
 
-            if (response.IsSuccessStatusCode)
+            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/authorize?judgeId={judgeId}&pass={passHash}");
+            if (!response.IsSuccessStatusCode)
             {
-
-                var token = await response.Content.ReadAsStringAsync();
-                Response.Cookies.Append("token", token, new CookieOptions
-                {
-                    IsEssential = true,
-                    Expires = DateTime.Now + TimeSpan.FromMinutes(40),
-                });
-                Response.Cookies.Append("judgeid", judgeid, new CookieOptions
-                {
-                    IsEssential = true,
-                    Expires = DateTimeOffset.MaxValue
-                });
-
-                return RedirectToAction("Index", "ScoreBoard");
+                vm.Secondary = false;
+                vm.Error = true;
+                return View(vm);
             }
 
-            vm.Secondary = false;
-            vm.Error = true;
-            return View(vm);
+            var token = await response.Content.ReadAsStringAsync();
+            Response.Cookies.Append("token", token, new CookieOptions
+            {
+                IsEssential = true,
+                Expires = DateTime.MaxValue
+            });
+            return RedirectToAction("Index", "ScoreBoard");
         }
     }
 }

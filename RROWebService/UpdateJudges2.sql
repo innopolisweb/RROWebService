@@ -1,1 +1,0 @@
-﻿sp_rename 'Judges.Id', 'JudgeId';

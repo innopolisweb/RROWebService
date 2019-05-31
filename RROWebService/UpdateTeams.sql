@@ -1,1 +1,0 @@
-﻿sp_rename 'Teams.Id', 'TeamId';

@@ -2,11 +2,9 @@
 
 namespace RROWebService.Models.ObjectModel.Primitives
 {
-    public class Category
+    public class CurrentTour
     {
         [Key]
-        public string CategoryId { get; set; }
-
-        public string FormPath { get; set; }
+        public int Current { get; set; }
     }
 }

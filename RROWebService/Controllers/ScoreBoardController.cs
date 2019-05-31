@@ -1,66 +1,88 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RROWebService.Models;
+using RROWebService.Authentication;
 using RROWebService.Models.Categories.Oml;
 using RROWebService.Models.ObjectModel;
+using RROWebService.Models.ObjectModel.Abstractions;
 
 namespace RROWebService.Controllers
 {
+    [Route("scoreboard")]
     public class ScoreBoardController : Controller
     {
-        private readonly CompetitionContext _dbContext;
-
-        public ScoreBoardController(CompetitionContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (!Request.Cookies.ContainsKey("judgeid") || !Request.Cookies.ContainsKey("token"))
-                return Unauthorized();
+            if (!Request.Cookies.ContainsKey("token"))
+                return RedirectToAction("Index", "Authorization");
 
-            var judgeid = Request.Cookies["judgeid"];
+            var token = Request.Cookies["token"];
+            var payload = JWTJudgeProvider.DecodeToken(token);
 
-            //TODO a lot of forms and tables
+            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/judge?token={token}");
+            if (!response.IsSuccessStatusCode) return StatusCode(500);
 
-            return RedirectToAction("Oml");
+            var judgeJson = await response.Content.ReadAsStringAsync();
+            var judge = JsonConvert.DeserializeObject<RROJudge>(judgeJson);
+            var teamsResponse = await new HttpClient()
+                .GetAsync($"http://localhost:5000/api/teams?tour={payload.Tour}&polygon={judge.Polygon}");
+            if (!teamsResponse.IsSuccessStatusCode) return StatusCode(500);
+
+            var teamsJson = await teamsResponse.Content.ReadAsStringAsync();
+            var teams = JsonConvert.DeserializeObject<List<RROTeam>>(teamsJson);
+            if (!teams.Any()) return NotFound();
+
+            var roundResponse = await new HttpClient().GetAsync("http://localhost:5000/api/currentround");
+            if (!roundResponse.IsSuccessStatusCode) return StatusCode(500);
+
+            var round = Int32.Parse(await roundResponse.Content.ReadAsStringAsync());
+            var category = teams.First().Category;
+
+            TempData["judge"] = judgeJson;
+            TempData["teams"] = teamsJson;
+            TempData["category"] = category;
+            TempData["round"] = round.ToString();
+            TempData["tour"] = payload.Tour.ToString();
+
+
+            switch (category)
+            {
+                case "ОМЛ":
+                    return RedirectToAction("Oml");
+                default:
+                    //TODO a lot of forms and tables
+                    return NotFound();
+            }
         }
-
+    
+        [Route("oml")]
         [HttpGet]
         public async Task<IActionResult> Oml()
         {
             var vm = new OmlViewModel();
 
-            var judgeId = Request.Cookies["judgeid"];
-            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/judge?id={judgeId}");
+            var round = Int32.Parse(TempData["round"].ToString());
+            var tour = Int32.Parse(TempData["tour"].ToString());
+            var category = (string)TempData["category"];
+            var judge = JsonConvert.DeserializeObject<RROJudge>(TempData["judge"].ToString());
+            var teams = JsonConvert.DeserializeObject<List<RROTeam>>(TempData["teams"].ToString());
 
-            if (!response.IsSuccessStatusCode) return Unauthorized();
+            var preResultResponse = await new HttpClient()
+                .GetAsync($"http://localhost:5000/api/omlpreresults?polygon={judge.Polygon}");
+            if (!preResultResponse.IsSuccessStatusCode) return StatusCode(500);
 
-            var judgeSerialized = await response.Content.ReadAsStringAsync();
-            var judge = JsonConvert.DeserializeObject<RROJudge>(judgeSerialized);
+            var preResultTeamsJson = await preResultResponse.Content.ReadAsStringAsync();
+            var preResultTeams =
+                JsonConvert.DeserializeObject<List<OmlScore>>(preResultTeamsJson);
 
-            var teams =
-                await new HttpClient().GetAsync(
-                    $"http://localhost:5000/api/teams?polygon={judge.Polygon}&tour={judge.Tour}");
-
-            var teamsSerialized = await teams.Content.ReadAsStringAsync();
-            var teamList = JsonConvert.DeserializeObject<List<RROTeam>>(teamsSerialized);
-
-            var currentRound = _dbContext.CurrentRound.Last().Current;
-            var overridedTeams = (from it in _dbContext.OMLScoreBoard
-                where it.Round == currentRound
-                where it.Polygon == judge.Polygon
-                select it).ToList();
-
-            foreach (var team in teamList)
+            foreach (var team in teams)
             {
-                var temp = overridedTeams.Find(t => t.TeamId == team.TeamId);
+                var temp = preResultTeams.Find(t => t.TeamId == team.TeamId);
                 if (temp == null)
                 {
                     vm.Teams.Add(new OmlScoreViewModel {TeamId = team.TeamId});
@@ -84,17 +106,16 @@ namespace RROWebService.Controllers
                 });
             }
 
-            vm.JudgeName = judge.Name;
+            vm.JudgeName = judge.JudgeName;
             vm.Polygon = judge.Polygon;
-            vm.Tour = judge.Tour;
-            vm.Category = teamList.Count == 0 ? "unknown" : teamList.First().CategoryId;
-            vm.CurrentRound = currentRound;
+            vm.Category = category;
+            vm.CurrentRound = round;
 
             ViewData["Polygon"] = vm.Polygon;
-            ViewData["Tour"] = vm.Tour;
+            ViewData["Tour"] = tour;
             ViewData["Category"] = vm.Category;
             ViewData["JudgeName"] = vm.JudgeName;
-            ViewData["Round"] = currentRound;
+            ViewData["Round"] = round;
 
             return View(vm);
         }
