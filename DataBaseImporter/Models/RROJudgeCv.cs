@@ -6,8 +6,8 @@ namespace DataBaseImporter.Models
     {
         [Key]
         public string JudgeId { get; set; }
-        public string Pass { get; set; }
         public int Polygon { get; set; }
         public string JudgeName { get; set; }
+        public string PassHash { get; set; }
     }
 }

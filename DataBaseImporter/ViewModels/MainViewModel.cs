@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -203,11 +204,15 @@ namespace DataBaseImporter.ViewModels
                 RecieveDataCommand.ReportProgress(() =>
                 {
                     var parsed = Int32.TryParse(judgeCvPolygons.Values[i1][0].ToString().Trim(), out var res);
+                    var pass = judgeCvPass.Values[i1][0].ToString();
+                    var passBytes = Encoding.UTF8.GetBytes(pass);
+                    var hash = MD5.Create().ComputeHash(passBytes);
+                    var passHash = Convert.ToBase64String(hash);
                     JudgesCv.Add(new RROJudgeCv
                     {
                         JudgeId = judgeCvIds.Values[i1][0].ToString().Trim(),
                         Polygon = parsed ? res : 0,
-                        Pass = judgeCvPass.Values[i1][0].ToString(),
+                        PassHash = passHash,
                         JudgeName = judgeCvNames.Values[i1][0].ToString().Trim(),
                     });
                 });
@@ -222,6 +227,10 @@ namespace DataBaseImporter.ViewModels
                 if (judgeFinIds.Values[i][0].ToString().ToLower() == "judgeid") continue;
 
                 var i1 = i;
+                var pass = judgeFinPass.Values[i1][0].ToString();
+                var passBytes = Encoding.UTF8.GetBytes(pass);
+                var hash = MD5.Create().ComputeHash(passBytes);
+                var passHash = Convert.ToBase64String(hash);
                 RecieveDataCommand.ReportProgress(() =>
                 {
                     var parsed = Int32.TryParse(judgeFinPolygons.Values[i1][0].ToString().Trim(), out var res);
@@ -229,7 +238,7 @@ namespace DataBaseImporter.ViewModels
                     {
                         JudgeId = judgeFinIds.Values[i1][0].ToString().Trim(),
                         Polygon = parsed ? res : 0,
-                        Pass = judgeFinPass.Values[i1][0].ToString(),
+                        PassHash = passHash,
                         JudgeName = judgeFinNames.Values[i1][0].ToString().Trim(),
                     });
                 });
