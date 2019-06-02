@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">RROScoreBoard</string>
+  <string name="action_settings">Settings</string>
+  <string name="enter_login">Enter login</string>
+  <string name="enter_pass">Enter password</string>
+  <string name="login">Login</string>
+</resources>
