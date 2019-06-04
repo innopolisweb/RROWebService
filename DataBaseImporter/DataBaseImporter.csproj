@@ -343,6 +343,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DataModelCore\DataModelCore.csproj">
+      <Project>{adf16348-b08a-4de3-a23d-be38795d15a2}</Project>
+      <Name>DataModelCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

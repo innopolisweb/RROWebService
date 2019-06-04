@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RROWebService.Models.ObjectModel.Primitives
+namespace DataModelCore.ObjectModel.Primitives
 {
     public class CurrentTour
     {

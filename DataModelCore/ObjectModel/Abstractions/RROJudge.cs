@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RROWebService.Models.ObjectModel.Abstractions
+namespace DataModelCore.ObjectModel.Abstractions
 {
     public class RROJudge
     {

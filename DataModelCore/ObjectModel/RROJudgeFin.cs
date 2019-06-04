@@ -1,6 +1,6 @@
-﻿using RROWebService.Models.ObjectModel.Abstractions;
+﻿using DataModelCore.ObjectModel.Abstractions;
 
-namespace RROWebService.Models.ObjectModel
+namespace DataModelCore.ObjectModel
 {
     public class RROJudgeFin : RROJudge
     {

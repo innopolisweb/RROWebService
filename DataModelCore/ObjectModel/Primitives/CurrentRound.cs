@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataBaseImporter.Models
+namespace DataModelCore.ObjectModel.Primitives
 {
     public class CurrentRound
     {

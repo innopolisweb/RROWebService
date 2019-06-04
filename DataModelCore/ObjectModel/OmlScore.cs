@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RROWebService.Models.ObjectModel
+namespace DataModelCore.ObjectModel
 {
     public class OmlScore
     {

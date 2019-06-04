@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Linq;
 using System.Threading.Tasks;
+using DataModelCore.ObjectModel;
+using DataModelCore.ObjectModel.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RROWebService.Authentication;
 using RROWebService.Models.Categories.Oml;
-using RROWebService.Models.ObjectModel;
-using RROWebService.Models.ObjectModel.Abstractions;
 
 namespace RROWebService.Controllers
 {
