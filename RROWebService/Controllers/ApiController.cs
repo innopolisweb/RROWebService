@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataModelCore.ObjectModel;
+using DataModelCore.ObjectModel.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using RROWebService.Authentication;
 using RROWebService.Models;
-using RROWebService.Models.ObjectModel;
-using RROWebService.Models.ObjectModel.Abstractions;
 
 namespace RROWebService.Controllers
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using RROWebService.Models.ObjectModel.Abstractions;
+using DataModelCore.ObjectModel.Abstractions;
 
 namespace RROWebService.Authentication
 {
@@ -15,14 +15,17 @@ namespace RROWebService.Authentication
 
         public int Tour { get; set; }
 
-        public static JudgePayload Create(RROJudge judge, int tour)
+        public string Service { get; set; }
+
+        public static JudgePayload Create(RROJudge judge, int tour, string service)
         {
             var payload = new JudgePayload
             {
                 JudgeId = judge.JudgeId,
                 Status = judge.Status,
                 OpenTime = DateTime.Now,
-                Tour = tour
+                Tour = tour,
+                Service = service
             };
             payload.Expires = payload.OpenTime + TimeSpan.FromMinutes(40);
             return payload;

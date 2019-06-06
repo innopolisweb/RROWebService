@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RROWebService.Models.ObjectModel;
-using RROWebService.Models.ObjectModel.Primitives;
+﻿using DataModelCore.ObjectModel;
+using DataModelCore.ObjectModel.Primitives;
+using Microsoft.EntityFrameworkCore;
 
 namespace RROWebService.Models
 {
