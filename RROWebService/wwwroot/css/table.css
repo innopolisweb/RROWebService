@@ -1,101 +1,36 @@
+* {text-align: center}
+
+th, td {
+    border: 2px solid black;
+    text-align: center !important;
+}
+
 table {
-    display: grid;
     border-collapse: collapse;
-    min-width: 100%;
-    grid-template-columns:
-            minmax(100px, 1fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(300px, 1.67fr)
-            minmax(300px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 1.67fr)
-            minmax(150px, 3.33fr);
-}
-
-thead,
-tbody,
-tr {
-    display: contents;
-}
-
-th,
-td {
-    padding: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-spaces;
+    width: 100%;
 }
 
 th {
-    z-index: 2;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    background: #6c7ae0;
-    color: white;
+    background-color: #6d79dc;
 }
 
-th:last-child {
-    border: 0;
-}
-
-td {
-    z-index: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: white;
-    color: #808080;
-}
-
-tr:nth-child(even) td {
-    background: #e2e2e2;
-}
-
-tr th:nth-child(1) {
-    z-index: 3;
-    position: sticky;
-    position: -webkit-sticky;
-    left: 0;
-}
-
-tr th:nth-child(1),
-tr th:nth-child(7),
-tr th:nth-child(8),
-tr th:nth-child(9),
-tr th:nth-child(11),
-tr th:nth-child(12){
-    border-right: 3px dashed white;
-}
-
-tr td:nth-child(1) {
-    background-color: #7d8cff;
-    color: white;
-    z-index: 1;
-    position: sticky;
-    position: -webkit-sticky;
-    left: 0;
-}
-
-th, td {
+.mdl-checkbox {
     text-align: center;
-    font-weight: normal;
-    font-size: 0.75rem;
 }
 
-select {
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-    overflow: hidden;
+tr:nth-child(5n-4) th:nth-child(1),
+tr:nth-child(5n-4) th:nth-child(2){
+    position: sticky;
+    position: -webkit-sticky;
+    left: -1px;
+    z-index: 5;
 }
 
-/*td {*/
-    /*display: flex;*/
-    /*flex-direction:row;*/
-/*}*/
+tr:nth-child(5n-4) td:nth-child(1),
+tr:nth-child(5n-4) td:nth-child(2){
+    background-color: #FFFFFF;
+    position: sticky;
+    position: -webkit-sticky;
+    left: -1px;
+    z-index: 5;
+}

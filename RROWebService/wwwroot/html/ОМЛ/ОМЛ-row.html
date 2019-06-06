@@ -1,108 +1,214 @@
 <!-- "2019 ОМЛ" row form -->
 
-<tr>
-    <!-- ======================== "Команда" ======================== -->
-    <td>ОМЛ-001</td>
-
-    <!-- ======================== "Стоит полностью в верной зоне" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Лежит полностью в верной зоне" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Частично в верной зоне (не важно лежит или стоит)" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Стоит полностью в НЕверной зоне*" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Лежит полностью в НЕверной зоне*" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Не подходит ни под один критерий" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Баллы..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Синий" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <select class="mdl-textfield__input">
-                <option></option>
-                <option>Стоит в зел. зоне + касается синей исходной зоны или серого контура</option>
-                <option>Не выполянет условия начисления баллов</option>
-            </select>
-            <label class="mdl-textfield__label"></label>
-        </div>
-    </td>
-
-    <!-- ======================== "Черный блок" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <select class="mdl-textfield__input">
-                <option></option>
-                <option>Полностью в зоне батареи</option>
-                <option>Частично в зоне батареи</option>
-                <option>Не в зоне</option>
-            </select>
-            <label class="mdl-textfield__label"></label>
-        </div>
-    </td>
-
-    <!-- ======================== "Штраф" ======================== -->
-    <!-- "Робот полностью остановился в зоне" -->
-    <td>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-            <input type="checkbox" class="mdl-checkbox__input">
-        </label>
-    </td>
-    <!-- "Стена повреждена / смещена" -->
-    <td>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-            <input type="checkbox" class="mdl-checkbox__input">
-        </label>
-    </td>
-
-    <!-- ======================== "Время" ======================== -->
-    <td>
-        <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label">Время..</label>
-        </div>
-    </td>
-
-    <!-- ======================== "Подпись участника" ======================== -->
-    <td>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-            <div class="submit-btn">Сохранить</div>
-        </button>
-    </td>
-</tr>
+<div class="table-data-row">
+    <tr>
+        <td rowspan="5">1</td>
+        <td rowspan="5">ОМЛ-001</td>
+        <td>Красный</td>
+        <td>Взрослый</td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="5">Синий</td>
+        <td rowspan="5">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="3">№1</td>
+        <td rowspan="3">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="3">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="5">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="3">угловая</td>
+        <td rowspan="3">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="3">№1</td>
+        <td rowspan="3">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Время..</label>
+            </div>
+        </td>
+        <td rowspan="5">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <div class="submit-btn">СОГЛАСЕН</div>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>Желтый</td>
+        <td>Ребенок</td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td>Зеленый</td>
+        <td>Взрослый</td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">Белый</td>
+        <td>Взрослый</td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="2">№1</td>
+        <td rowspan="2">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="2">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="2">прямая</td>
+        <td rowspan="2">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td rowspan="2">№2</td>
+        <td rowspan="2">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">Баллы..</label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Ребенок</td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+        <td>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                <input type="checkbox" class="mdl-checkbox__input">
+            </label>
+        </td>
+    </tr>
+</div>
