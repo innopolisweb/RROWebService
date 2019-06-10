@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <title>@ViewData["Category"] - ScoreBoard</title>
 
-    <link rel="stylesheet" href="~/css/main_layout.css">
-    <link rel="stylesheet" href="~/css/table.css">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="~/css/mdl.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="~/css/table.css">
+    <link rel="stylesheet" href="~/css/main_layout.css">
 
 
     <script src="~/js/main.js"></script>
@@ -16,49 +15,49 @@
 
 </head>
 <body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <!-- Page header section with data about tour, polygon, category, round -->
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title" id="header-field-tour">Tour: @ViewData["Tour"]</span>
-            <span class="mdl-layout-title" id="header-field-polygon">Polygon: @ViewData["Polygon"]</span>
-            <span class="mdl-layout-title" id="header-field-category">Category: @ViewData["Category"]</span>
-            <div class="mdl-layout-spacer"></div>
+        <!-- Page header section with data about tour, polygon, category, round -->
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title" id="header-field-tour">Tour: @ViewData["Tour"]</span>
+                <span class="mdl-layout-title" id="header-field-polygon">Polygon: @ViewData["Polygon"]</span>
+                <span class="mdl-layout-title" id="header-field-category">Category: @ViewData["Category"]</span>
+                <span class="mdl-layout-title" id="header-field-round" hidden></span>
+                <div class="mdl-layout-spacer"></div>
 
-            <!-- Logout button -->
-            <button id="header-field-logout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
-                Logout
-            </button>
-        </div>
-    </header>
-
-    <!-- Page content container, which contains the table -->
-    <main class="mdl-layout__content">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                @RenderSection("THeader")
-                </thead>
-
-                <tbody>
-                @RenderBody()
-                </tbody>
-            </table>
-
-            <!-- Snackbar which is shown during the on-server data transfer -->
-            <div class="snackbar" id="snackbar">
-                <div>Сохранение..</div>
-                <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+                <!-- Logout button -->
+                <button id="header-field-logout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500">
+                    Logout
+                </button>
             </div>
-        </div>
-    </main>
+        </header>
 
-    <!-- Page footer section with data about judge's fullname -->
-    <footer class="mdl-mini-footer">
-        <div id="footer-field-fullname">@ViewData["JudgeName"]</div>
-    </footer>
-</div>
-@RenderSection("Scripts")
+        <!-- Page content container, which contains the table -->
+        <main class="mdl-layout__content">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        @RenderSection("THeader")
+                    </thead>
+                    <tbody>
+                        @RenderBody()
+                    </tbody>
+                </table>
+
+                <!-- Snackbar which is shown during the on-server data transfer -->
+                <div class="snackbar" id="snackbar">
+                    <div>Сохранение..</div>
+                    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Page footer section with data about judge's fullname -->
+        <footer class="mdl-mini-footer">
+            <div id="footer-field-fullname">@ViewData["JudgeName"]</div>
+        </footer>
+    </div>
+    @RenderSection("Scripts")
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿namespace RROWebService.Authentication
+﻿namespace DataModelCore.Authentication
 {
     public class JWTHeader
     {

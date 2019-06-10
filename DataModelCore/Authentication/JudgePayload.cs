@@ -1,7 +1,7 @@
 ﻿using System;
 using DataModelCore.ObjectModel.Abstractions;
 
-namespace RROWebService.Authentication
+namespace DataModelCore.Authentication
 {
     public class JudgePayload
     {
@@ -27,7 +27,10 @@ namespace RROWebService.Authentication
                 Tour = tour,
                 Service = service
             };
-            payload.Expires = payload.OpenTime + TimeSpan.FromMinutes(40);
+            if (service != "androidApp")
+                payload.Expires = payload.OpenTime + TimeSpan.FromMinutes(40);
+            else 
+                payload.Expires = DateTime.MaxValue;
             return payload;
         }
 

@@ -281,12 +281,6 @@
     <Compile Include="Helpers\Command.cs" />
     <Compile Include="Helpers\InvertBoolConverter.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />
-    <Compile Include="Models\CurrentRound.cs" />
-    <Compile Include="Models\MainContext.cs" />
-    <Compile Include="Models\OmlScore.cs" />
-    <Compile Include="Models\RROJudgeCv.cs" />
-    <Compile Include="Models\RROJudgeFin.cs" />
-    <Compile Include="Models\RROTeam.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RefillBaseConfirmationWindow.xaml.cs">
       <DependentUpon>RefillBaseConfirmationWindow.xaml</DependentUpon>

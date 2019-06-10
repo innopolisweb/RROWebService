@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Linq;
 using System.Threading.Tasks;
+using DataModelCore.Authentication;
 using DataModelCore.ObjectModel;
 using DataModelCore.ObjectModel.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RROWebService.Authentication;
 using RROWebService.Models.Categories.Oml;
 
 namespace RROWebService.Controllers
@@ -24,20 +24,20 @@ namespace RROWebService.Controllers
             var token = Request.Cookies["token"];
             var payload = JWTJudgeProvider.DecodeToken(token);
 
-            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/judge?token={token}");
+            var response = await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/judge?token={token}");
             if (!response.IsSuccessStatusCode) return StatusCode(500);
 
             var judgeJson = await response.Content.ReadAsStringAsync();
             var judge = JsonConvert.DeserializeObject<RROJudge>(judgeJson);
             var teamsResponse = await new HttpClient()
-                .GetAsync($"http://localhost:5000/api/teams?tour={payload.Tour}&polygon={judge.Polygon}");
+                .GetAsync($"https://rro.azurewebsites.net/api/teams?tour={payload.Tour}&polygon={judge.Polygon}");
             if (!teamsResponse.IsSuccessStatusCode) return StatusCode(500);
 
             var teamsJson = await teamsResponse.Content.ReadAsStringAsync();
             var teams = JsonConvert.DeserializeObject<List<RROTeam>>(teamsJson);
             if (!teams.Any()) return NotFound();
 
-            var roundResponse = await new HttpClient().GetAsync("http://localhost:5000/api/currentround");
+            var roundResponse = await new HttpClient().GetAsync("https://rro.azurewebsites.net/api/currentround");
             if (!roundResponse.IsSuccessStatusCode) return StatusCode(500);
 
             var round = Int32.Parse(await roundResponse.Content.ReadAsStringAsync());
@@ -73,7 +73,7 @@ namespace RROWebService.Controllers
             var teams = JsonConvert.DeserializeObject<List<RROTeam>>(TempData["teams"].ToString());
 
             var preResultResponse = await new HttpClient()
-                .GetAsync($"http://localhost:5000/api/omlpreresults?polygon={judge.Polygon}");
+                .GetAsync($"https://rro.azurewebsites.net/api/omlpreresults?polygon={judge.Polygon}");
             if (!preResultResponse.IsSuccessStatusCode) return StatusCode(500);
 
             var preResultTeamsJson = await preResultResponse.Content.ReadAsStringAsync();

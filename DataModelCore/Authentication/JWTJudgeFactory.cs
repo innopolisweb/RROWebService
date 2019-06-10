@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RROWebService.Authentication
+namespace DataModelCore.Authentication
 {
     public static class JWTJudgeFactory
     {
@@ -25,6 +25,12 @@ namespace RROWebService.Authentication
             if (!Tokens.ContainsKey(judgeId)) return null;
 
             return Tokens[judgeId].Last();
+        }
+
+        public static void RemoveToken(string judgeId, string token)
+        {
+            if (!Tokens.ContainsKey(judgeId)) return;
+            Tokens[judgeId].Remove(token);
         }
 
         public static IEnumerable<string> GetAllTokensForJudge(string judgeId)

@@ -18,7 +18,7 @@ namespace RROWebService.Controllers
                 return View(new AuthorizationViewModel());
 
             var token = Request.Cookies["token"];
-            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/checktoken?token={token}");
+            var response = await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/checktoken?token={token}");
             var content = await response.Content.ReadAsStringAsync();
 
             if (content == "Valid") return RedirectToAction("Index", "ScoreBoard");
@@ -43,7 +43,7 @@ namespace RROWebService.Controllers
             var passHashBytes = MD5.Create().ComputeHash(passBytes);
             var passHash = Convert.ToBase64String(passHashBytes);
 
-            var response = await new HttpClient().GetAsync($"http://localhost:5000/api/authorize?judgeId={judgeId}&pass={passHash}");
+            var response = await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/authorize?judgeId={judgeId}&pass={passHash}&serviceId=webApp");
             if (!response.IsSuccessStatusCode)
             {
                 vm.Secondary = false;

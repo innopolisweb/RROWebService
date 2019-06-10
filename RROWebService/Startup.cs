@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DataModelCore.DataContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RROWebService.Models;
 
 namespace RROWebService
 {
@@ -30,7 +29,7 @@ namespace RROWebService
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<CompetitionContext>(options => options.UseSqlServer(connection));
+            //services.AddDbContext<CompetitionContext>(options => options.UseSqlServer(connection));
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -22,6 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
 	<LinearLayout
+		android:id="@+id/auth_form"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
@@ -53,6 +54,33 @@
 			android:text="@string/login"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"/>
+
+	</LinearLayout>
+
+	<LinearLayout 
+		android:visibility="gone"
+		android:id="@+id/auth_loading"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<ProgressBar
+			android:id="@+id/loading_spinner"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_marginTop="10dp"
+			android:indeterminateTintMode="src_atop"
+			android:indeterminateTint="@color/colorAccent"
+			android:layout_gravity="center" />
+
+		<TextView
+			android:gravity="center"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textSize="20sp"
+			android:text="@string/loading"
+			android:textColor="@color/colorAccent"/>
 
 	</LinearLayout>
 
