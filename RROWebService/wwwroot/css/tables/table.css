@@ -1,7 +1,9 @@
 * {text-align: center}
 
 th, td {
-    border: 2px solid black;
+    border: 2px dashed white;
+    border-top: none;
+    border-bottom: none;
     text-align: center !important;
 }
 
@@ -14,11 +16,14 @@ th {
     background-color: #6d79dc;
 }
 
+td {
+    background-color: white;
+}
+
 .mdl-checkbox {
     text-align: center;
 }
 
-tr:nth-child(5n-4) th:nth-child(1),
 tr:nth-child(5n-4) th:nth-child(2){
     position: sticky;
     position: -webkit-sticky;
@@ -26,13 +31,19 @@ tr:nth-child(5n-4) th:nth-child(2){
     z-index: 5;
 }
 
-tr:nth-child(5n-4) td:nth-child(1),
 tr:nth-child(5n-4) td:nth-child(2){
-    background-color: #FFFFFF;
     position: sticky;
     position: -webkit-sticky;
     left: -1px;
     z-index: 11;
+}
+
+tr:nth-child(10n+1) td,
+tr:nth-child(10n+2) td,
+tr:nth-child(10n+3) td,
+tr:nth-child(10n+4) td,
+tr:nth-child(10n+5) td{
+    background-color: #cacaca;
 }
 
 /* Dropdown own styling */
@@ -61,4 +72,29 @@ tr:nth-child(5n-4) td:nth-child(2){
     position: relative;
     z-index: 10;
     font-size: 1em;
+}
+
+/* Checkbox own styling */
+input[type='checkbox']:after {
+    line-height: 1.5em;
+    border: 1px solid #255887;
+    border-radius: 1px;
+    box-shadow: 1px 1px 5px #e7e7e7;
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: rgb(224,224,224);
+}
+
+input[type='checkbox']:checked:after {
+    content: '✔';
+    font-weight: bold;
+    color: #255887;
+    text-align: center;
+}
+
+/* Textarea own styling */
+.timefield {
+    border: 3px dashed #d8d8d8;
 }
