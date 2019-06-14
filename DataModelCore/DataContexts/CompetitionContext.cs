@@ -1,14 +1,21 @@
-﻿using DataModelCore.ObjectModel;
+﻿using System;
+using DataModelCore.ObjectModel;
 using DataModelCore.ObjectModel.Primitives;
 using Microsoft.EntityFrameworkCore;
 
-namespace RROWebService.Models
+namespace DataModelCore.DataContexts
 {
     public class CompetitionContext : DbContext
     {
-        public CompetitionContext(DbContextOptions options) : base(options)
+        public CompetitionContext() : base(new DbContextOptions<CompetitionContext>())
         {
+             
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(Resources.ResourceManager.GetString("ConnectionString") ?? throw new InvalidOperationException());
         }
 
         public DbSet<RROTeamCv> TeamsCv { get; set; }
@@ -24,5 +31,7 @@ namespace RROWebService.Models
         public DbSet<CurrentRound> CurrentRound { get; set; }
 
         public DbSet<CurrentTour> CurrentTour { get; set; }
+
+        public DbSet<Service> Services { get; set; }
     }
 }

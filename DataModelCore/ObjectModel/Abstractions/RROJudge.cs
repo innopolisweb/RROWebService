@@ -7,11 +7,10 @@ namespace DataModelCore.ObjectModel.Abstractions
         [Key]
         public string JudgeId { get; set; }
 
-        public string Status { get; set; }
+        public string JudgeName { get; set; }
 
         public int Polygon { get; set; }
 
-        public string JudgeName { get; set; }
-
+        public string Status { get; set; }
     }
 }

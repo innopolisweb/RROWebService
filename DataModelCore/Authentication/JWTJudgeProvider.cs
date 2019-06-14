@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace RROWebService.Authentication
+namespace DataModelCore.Authentication
 {
     public static class JWTJudgeProvider
     {

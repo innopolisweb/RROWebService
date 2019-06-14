@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataModelCore.Authentication;
+using DataModelCore.DataContexts;
 using DataModelCore.ObjectModel;
 using DataModelCore.ObjectModel.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using RROWebService.Authentication;
-using RROWebService.Models;
 
 namespace RROWebService.Controllers
 {
@@ -16,17 +16,17 @@ namespace RROWebService.Controllers
     {
         private readonly CompetitionContext _dbContext;
 
-        public ApiController(CompetitionContext dbContext)
+        public ApiController()
         {
-            _dbContext = dbContext;
+            _dbContext = new CompetitionContext();
         }
 
         [HttpGet]
-        public IActionResult Authorize(string judgeId, string pass)
+        public IActionResult Authorize(string judgeId, string pass, string serviceId)
         {
             var currentTour =
                 (from ct in _dbContext.CurrentTour
-                    select ct.Current).Last();
+                    select ct.Current).Last();   
 
             switch (currentTour)
             {
@@ -43,7 +43,13 @@ namespace RROWebService.Controllers
                     var judgeCv = getJudgeCv.First();
                     if (!judgeCv.PassHash.Equals(pass)) return BadRequest("Incorrect password");
 
-                    var payloadCv = JudgePayload.Create(judgeCv, 0);
+                    var payloadCv = JudgePayload.Create(judgeCv, 0, serviceId);
+                    var serviceCv =
+                        (from service in _dbContext.Services
+                            where service.ServiceId == payloadCv.Service
+                            select service).FirstOrDefault();
+                    if (serviceCv == null) return BadRequest("Unknown service");
+
                     var tokenCv = JWTJudgeProvider.CreateToken(payloadCv);
                     JWTJudgeFactory.AddToken(judgeCv.JudgeId, tokenCv, true);
 
@@ -63,7 +69,7 @@ namespace RROWebService.Controllers
                     var judgeFin = getJudgeFin.First();
                     if (!judgeFin.PassHash.Equals(pass)) return BadRequest("Incorrect password");
 
-                    var payloadFin = JudgePayload.Create(judgeFin, 1);
+                    var payloadFin = JudgePayload.Create(judgeFin, 1, serviceId);
                     var tokenFin = JWTJudgeProvider.CreateToken(payloadFin);
                     JWTJudgeFactory.AddToken(judgeFin.JudgeId, tokenFin, true);
 
@@ -88,7 +94,7 @@ namespace RROWebService.Controllers
                 return Ok("Invalid");
             }
 
-            if (payload.Expires <= DateTime.Now) return Ok("Invalid");
+            if (payload.Expires <= DateTime.Now) return Ok("Expired");
 
             var tokens = JWTJudgeFactory.GetAllTokensForJudge(payload.JudgeId);
             if (tokens.Any(t => t == token)) return Ok("Valid");
@@ -100,6 +106,13 @@ namespace RROWebService.Controllers
         {
             var round = _dbContext.CurrentRound.Last().Current;
             return Ok(round);
+        }
+
+        [HttpGet]
+        public IActionResult CurrentTour()
+        {
+            var tour = _dbContext.CurrentTour.Last().Current;
+            return Ok(tour);  
         }
 
         [HttpGet]

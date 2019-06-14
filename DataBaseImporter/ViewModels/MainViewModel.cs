@@ -10,7 +10,8 @@ using System.Threading;
 using System.Windows;
 using DataBaseImporter.Annotations;
 using DataBaseImporter.Helpers;
-using DataBaseImporter.Models;
+using DataModelCore.DataContexts;
+using DataModelCore.ObjectModel;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -36,7 +37,7 @@ namespace DataBaseImporter.ViewModels
             RecieveDataCommand = new AsyncCommand(RecieveData);
             FillDbCommand = new AsyncCommand(FillDb);
 
-            Teams = new ObservableCollection<RROTeam>();
+            Teams = new ObservableCollection<RROTeamCv>();
             JudgesCv = new ObservableCollection<RROJudgeCv>();
             JudgesFin = new ObservableCollection<RROJudgeFin>();
         }
@@ -49,7 +50,7 @@ namespace DataBaseImporter.ViewModels
 
         public AsyncCommand RecieveDataCommand { get; }
 
-        public ObservableCollection<RROTeam> Teams { get; }
+        public ObservableCollection<RROTeamCv> Teams { get; }
 
         public ObservableCollection<RROJudgeCv> JudgesCv { get; }
 
@@ -183,11 +184,11 @@ namespace DataBaseImporter.ViewModels
                 InitializeServiceCommand.ReportProgress(() =>
                 {
                     var parsed = Int32.TryParse(polygons.Values[i1][0].ToString().Trim(), out var res);
-                    Teams.Add(new RROTeam
+                    Teams.Add(new RROTeamCv
                     {
                         TeamId = teamIds.Values[i1][0].ToString().Trim(),
                         Polygon = parsed ? res : 0,
-                        Category = data[0],
+                        Category = data[0]
                     });
                 });
             }
@@ -196,6 +197,7 @@ namespace DataBaseImporter.ViewModels
             var judgeCvPass = _service.Spreadsheets.Values.Get(_sheetId, "JudgesCv!B:B").Execute();
             var judgeCvPolygons = _service.Spreadsheets.Values.Get(_sheetId, "JudgesCv!C:C").Execute();
             var judgeCvNames = _service.Spreadsheets.Values.Get(_sheetId, "JudgesCv!D:D").Execute();
+            var judgeCvStatus = _service.Spreadsheets.Values.Get(_sheetId, "JudgesCv!E:E").Execute();
             for (var i = 0; i < judgeCvIds.Values.Count; ++i)
             {
                 if (judgeCvIds.Values[i][0].ToString().ToLower() == "judgeid") continue;
@@ -214,6 +216,7 @@ namespace DataBaseImporter.ViewModels
                         Polygon = parsed ? res : 0,
                         PassHash = passHash,
                         JudgeName = judgeCvNames.Values[i1][0].ToString().Trim(),
+                        Status = judgeCvStatus.Values[i1][0].ToString()
                     });
                 });
             }
@@ -222,6 +225,7 @@ namespace DataBaseImporter.ViewModels
             var judgeFinPass = _service.Spreadsheets.Values.Get(_sheetId, "JudgesFin!B:B").Execute();
             var judgeFinPolygons = _service.Spreadsheets.Values.Get(_sheetId, "JudgesFin!C:C").Execute();
             var judgeFinNames = _service.Spreadsheets.Values.Get(_sheetId, "JudgesFin!D:D").Execute();
+            var judgeFinStatus = _service.Spreadsheets.Values.Get(_sheetId, "JudgesFin!E:E").Execute();
             for (var i = 0; i < judgeCvIds.Values.Count; ++i)
             {
                 if (judgeFinIds.Values[i][0].ToString().ToLower() == "judgeid") continue;
@@ -240,6 +244,7 @@ namespace DataBaseImporter.ViewModels
                         Polygon = parsed ? res : 0,
                         PassHash = passHash,
                         JudgeName = judgeFinNames.Values[i1][0].ToString().Trim(),
+                        Status = judgeFinStatus.Values[i1][0].ToString()
                     });
                 });
             }
@@ -273,7 +278,7 @@ namespace DataBaseImporter.ViewModels
             IsSending = true;
             try
             {
-                var context = new MainContext();
+                var context = new CompetitionContext();
                 context.TeamsCv.RemoveRange(context.TeamsCv.ToList());
                 context.JudgesCv.RemoveRange(context.JudgesCv.ToList());
                 context.JudgesFin.RemoveRange(context.JudgesFin.ToList());
