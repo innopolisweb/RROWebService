@@ -2,42 +2,226 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Results</title>
+    <title>Результаты</title>
 
+    <link rel="stylesheet" href="../../css/tables/table.css">
     <link rel="stylesheet" href="../../css/layouts/results_layout.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="../../css/tables/results_table.css">
 
-
-    <script src="../../js/main.js"></script>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title" id="header-field-round">Результаты олимпиады</span>
+        </div>
+    </header>
 
-        <!-- Page header section with data about tour, polygon, category, round -->
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Таблица результатов</span>
+    <main class="mdl-layout__content">
+        <div class="mdl-tabs mdl-js-tabs">
+            <div class="mdl-tabs__tab-bar">
+                <a href="#qualification" class="mdl-tabs__tab is-active">Квалификационный</a>
+                <a href="#final" class="mdl-tabs__tab">Финальный</a>
+                <a href="#overall" class="mdl-tabs__tab">Итог</a>
             </div>
-        </header>
 
-        <!-- Page content container, which contains the table -->
-        <main class="mdl-layout__content">
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <!-- Here is your table header form -->
-                    </thead>
+            <div class="mdl-tabs__panel is-active" id="qualification">
 
-                    <tbody>
-                        <!-- Here are your table row forms -->
-                    </tbody>
-                </table>
+                <select onchange="itemChange(this)">
+                    <option value="11">Основная младшая</option>
+                    <option value="12">Основная средняя</option>
+                    <option value="13">Основная старшая</option>
+                </select>
+
+                <div class="content1">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content2">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content3">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <div class="mdl-tabs__panel" id="final">
+
+                <select onchange="itemChange(this)">
+                    <option value="21">Основная младшая</option>
+                    <option value="22">Основная средняя</option>
+                    <option value="23">Основная старшая</option>
+                </select>
+
+                <div class="content1">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content2">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content3">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdl-tabs__panel" id="overall">
+
+                <select onchange="itemChange(this)">
+                    <option value="31">Основная младшая</option>
+                    <option value="32">Основная средняя</option>
+                    <option value="33">Основная старшая</option>
+                </select>
+
+                <div class="content1">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content2">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content3">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                                <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function itemChange(sender) {
+        if (sender.value == 11) {
+            document.getElementsByClassName("content1")[0].style.display = "inline-block";
+            document.getElementsByClassName("content2")[0].style.display = "none";
+            document.getElementsByClassName("content3")[0].style.display = "none";
+        } else if (sender.value == 12) {
+            document.getElementsByClassName("content1")[0].style.display = "none";
+            document.getElementsByClassName("content2")[0].style.display = "inline-block";
+            document.getElementsByClassName("content3")[0].style.display = "none";
+        } else if (sender.value == 13) {
+            document.getElementsByClassName("content1")[0].style.display = "none";
+            document.getElementsByClassName("content2")[0].style.display = "none";
+            document.getElementsByClassName("content3")[0].style.display = "inline-block";
+        } else if (sender.value == 21) {
+            document.getElementsByClassName("content1")[1].style.display = "inline-block";
+            document.getElementsByClassName("content2")[1].style.display = "none";
+            document.getElementsByClassName("content3")[1].style.display = "none";
+        } else if (sender.value == 22) {
+            document.getElementsByClassName("content1")[1].style.display = "none";
+            document.getElementsByClassName("content2")[1].style.display = "inline-block";
+            document.getElementsByClassName("content3")[1].style.display = "none";
+        } else if (sender.value == 23) {
+            document.getElementsByClassName("content1")[1].style.display = "none";
+            document.getElementsByClassName("content2")[1].style.display = "none";
+            document.getElementsByClassName("content3")[1].style.display = "inline-block";
+        } else if (sender.value == 31) {
+            document.getElementsByClassName("content1")[2].style.display = "inline-block";
+            document.getElementsByClassName("content2")[2].style.display = "none";
+            document.getElementsByClassName("content3")[2].style.display = "none";
+        } else if (sender.value == 32) {
+            document.getElementsByClassName("content1")[2].style.display = "none";
+            document.getElementsByClassName("content2")[2].style.display = "inline-block";
+            document.getElementsByClassName("content3")[2].style.display = "none";
+        } else if (sender.value == 33) {
+            document.getElementsByClassName("content1")[2].style.display = "none";
+            document.getElementsByClassName("content2")[2].style.display = "none";
+            document.getElementsByClassName("content3")[2].style.display = "inline-block";
+        }
+    }
+</script>
 </body>
 </html>

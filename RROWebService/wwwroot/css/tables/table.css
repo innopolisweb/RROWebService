@@ -38,11 +38,7 @@ tr:nth-child(5n-4) td:nth-child(2){
     z-index: 11;
 }
 
-tr:nth-child(10n+1) td,
-tr:nth-child(10n+2) td,
-tr:nth-child(10n+3) td,
-tr:nth-child(10n+4) td,
-tr:nth-child(10n+5) td{
+tr:nth-child(odd) td {
     background-color: #cacaca;
 }
 
@@ -97,4 +93,8 @@ input[type='checkbox']:checked:after {
 /* Textarea own styling */
 .timefield {
     border: 3px dashed #d8d8d8;
+}
+
+.t1 {
+    display: none;
 }

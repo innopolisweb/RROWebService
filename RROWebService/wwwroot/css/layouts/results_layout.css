@@ -4,7 +4,49 @@ body {
     display: flex;
 }
 
-.table-wrapper {
+.mdl-layout__header-row #header-field-new-round {
+    font-weight: bold;
+    color: white;
+}
+
+.mdl-layout__content {
+    height: 100%;
+}
+
+.mdl-layout__content > .mdl-tabs {
+    height: 100%;
+
+    text-align: center;
+}
+
+.content1, .content2, .content3 {
+    border-radius: 15px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     max-height: 100%;
-    overflow: scroll;
+    margin-top: 3%;
+    width: 100%;
+}
+
+.content1 {
+    display: inline-block;
+}
+
+.content2, .content3 {
+    display: none;
+}
+
+.snackbar {
+    visibility: hidden;
+    z-index: 3;
+    position: fixed;
+
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+    padding: 10px;
+
+    bottom: 0;
+    left: 45%;
+    width:10%;
 }
