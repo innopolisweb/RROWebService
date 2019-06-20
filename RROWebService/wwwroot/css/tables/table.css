@@ -1,0 +1,149 @@
+th, td {
+    border: 2px solid black;
+    text-align: center !important;
+    width: 100px;
+    height: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #6d79dc;
+}
+
+td {
+    background-color: white;
+}
+
+.oml-expanded tr:nth-child(30n + 1) td,
+.oml-expanded tr:nth-child(30n + 2) td,
+.oml-expanded tr:nth-child(30n + 3) td,
+.oml-expanded tr:nth-child(30n + 4) td,
+.oml-expanded tr:nth-child(30n + 5) td,
+.oml-expanded tr:nth-child(30n + 6) td,
+.oml-expanded tr:nth-child(30n + 7) td,
+.oml-expanded tr:nth-child(30n + 8) td,
+.oml-expanded tr:nth-child(30n + 9) td,
+.oml-expanded tr:nth-child(30n + 10) td,
+.oml-expanded tr:nth-child(30n + 11) td,
+.oml-expanded tr:nth-child(30n + 12) td,
+.oml-expanded tr:nth-child(30n + 13) td,
+.oml-expanded tr:nth-child(30n + 14) td,
+.oml-expanded tr:nth-child(30n + 15) td {
+    background-color: #cfcfcf;
+}
+
+.osr-expanded tr:nth-child(30n + 1) td,
+.osr-expanded tr:nth-child(30n + 2) td,
+.osr-expanded tr:nth-child(30n + 3) td,
+.osr-expanded tr:nth-child(30n + 4) td,
+.osr-expanded tr:nth-child(30n + 5) td,
+.osr-expanded tr:nth-child(30n + 6) td,
+.osr-expanded tr:nth-child(30n + 7) td,
+.osr-expanded tr:nth-child(30n + 8) td,
+.osr-expanded tr:nth-child(30n + 9) td,
+.osr-expanded tr:nth-child(30n + 10) td,
+.osr-expanded tr:nth-child(30n + 11) td,
+.osr-expanded tr:nth-child(30n + 12) td,
+.osr-expanded tr:nth-child(30n + 13) td,
+.osr-expanded tr:nth-child(30n + 14) td,
+.osr-expanded tr:nth-child(30n + 15) td {
+    background-color: #cfcfcf;
+}
+
+.ost-expanded tr:nth-child(6n + 1) td,
+.ost-expanded tr:nth-child(6n + 2) td,
+.ost-expanded tr:nth-child(6n + 3) td {
+    background-color: #cfcfcf;
+}
+
+.points tr:nth-child(odd) td {
+    background-color: #cfcfcf;
+}
+
+.points-tour1 tr td:nth-child(3),
+.points-tour1 tr td:nth-child(5),
+.points-tour1 tr td:nth-child(7),
+.points-tour1 tr td:nth-child(9),
+.points-tour1 tr td:nth-child(10),
+.points-tour1 tr td:nth-child(11),
+.points-tour2 tr td:nth-child(3),
+.points-tour2 tr td:nth-child(5),
+.points-tour2 tr td:nth-child(7),
+.points-tour2 tr td:nth-child(9),
+.points-tour2 tr td:nth-child(10),
+.points-tour2 tr td:nth-child(11) {
+    background-color: #9ac4ff;
+}
+
+.points-tour1 tr td:nth-child(4),
+.points-tour1 tr td:nth-child(6),
+.points-tour1 tr td:nth-child(8),
+.points-tour1 tr td:nth-child(12),
+.points-tour1 tr td:nth-child(13),
+.points-tour1 tr td:nth-child(14),
+.points-tour2 tr td:nth-child(4),
+.points-tour2 tr td:nth-child(6),
+.points-tour2 tr td:nth-child(8),
+.points-tour2 tr td:nth-child(12),
+.points-tour2 tr td:nth-child(13),
+.points-tour2 tr td:nth-child(14) {
+    background-color: #fffc9b;
+}
+
+.points-final tr td:nth-child(3),
+.points-final tr td:nth-child(5),
+.points-final tr td:nth-child(7) {
+    background-color: #9ac4ff;
+}
+
+.points-final tr td:nth-child(4),
+.points-final tr td:nth-child(6),
+.points-final tr td:nth-child(8) {
+    background-color: #fffc9b;
+}
+
+.points-tour1 tr:nth-child(odd) td:nth-child(3),
+.points-tour1 tr:nth-child(odd) td:nth-child(5),
+.points-tour1 tr:nth-child(odd) td:nth-child(7),
+.points-tour1 tr:nth-child(odd) td:nth-child(9),
+.points-tour1 tr:nth-child(odd) td:nth-child(10),
+.points-tour1 tr:nth-child(odd) td:nth-child(11),
+.points-tour2 tr:nth-child(odd) td:nth-child(3),
+.points-tour2 tr:nth-child(odd) td:nth-child(5),
+.points-tour2 tr:nth-child(odd) td:nth-child(7),
+.points-tour2 tr:nth-child(odd) td:nth-child(9),
+.points-tour2 tr:nth-child(odd) td:nth-child(10),
+.points-tour2 tr:nth-child(odd) td:nth-child(11) {
+    background-color: #6a96ff;
+}
+
+.points-tour1 tr:nth-child(odd) td:nth-child(4),
+.points-tour1 tr:nth-child(odd) td:nth-child(6),
+.points-tour1 tr:nth-child(odd) td:nth-child(8),
+.points-tour1 tr:nth-child(odd) td:nth-child(12),
+.points-tour1 tr:nth-child(odd) td:nth-child(13),
+.points-tour1 tr:nth-child(odd) td:nth-child(14),
+.points-tour2 tr:nth-child(odd) td:nth-child(4),
+.points-tour2 tr:nth-child(odd) td:nth-child(6),
+.points-tour2 tr:nth-child(odd) td:nth-child(8),
+.points-tour2 tr:nth-child(odd) td:nth-child(12),
+.points-tour2 tr:nth-child(odd) td:nth-child(13),
+.points-tour2 tr:nth-child(odd) td:nth-child(14) {
+    background-color: #fffe50;
+}
+
+.points-final tr:nth-child(odd) td:nth-child(3),
+.points-final tr:nth-child(odd) td:nth-child(5),
+.points-final tr:nth-child(odd) td:nth-child(7) {
+    background-color: #6a96ff;
+}
+
+.points-final tr:nth-child(odd) td:nth-child(4),
+.points-final tr:nth-child(odd) td:nth-child(6),
+.points-final tr:nth-child(odd) td:nth-child(8) {
+    background-color: #fffe50;
+}

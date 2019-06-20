@@ -19,28 +19,32 @@ body {
     text-align: center;
 }
 
-.content1, .content2, .content3 {
+.content1,
+.content2,
+.content3,
+.content4,
+.content5,
+.content6 {
     border-radius: 15px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    max-height: 400px;
-    overflow-y: scroll;
+    max-height: 100%;
     margin-top: 3%;
-    width: 90%;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.content1 {
     display: inline-block;
 }
 
-.snackbar {
-    visibility: hidden;
-    z-index: 3;
-    position: fixed;
+.content2,
+.content3,
+.content4,
+.content5,
+.content6 {
+    display: none;
+}
 
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-
-    padding: 10px;
-
-    bottom: 0;
-    left: 45%;
-    width:10%;
+.expanded-selector {
+    display: none;
 }
