@@ -33,16 +33,7 @@ namespace RROScoreBoard
                 case nameof(_vm.IsBusy):
                     VmOnBusyChanged();
                     break;
-                case nameof(_vm.Error):
-                    VmOnError();
-                    break;
             }
-        }
-
-        private void VmOnError()
-        {
-            _passEditText.Text = "";
-            _errorTextView.Visibility = _vm.Error ? ViewStates.Visible : ViewStates.Gone;
         }
 
         private void VmOnBusyChanged()
@@ -65,6 +56,8 @@ namespace RROScoreBoard
 
             _vm = ServiceProvider.GetService<AuthorizationViewModel>();
             _vm.PropertyChanged += VmOnPropertyChanged;
+            _vm.ErrorOccured += VmOnErrorOccured;
+
             _tokenStorage = ServiceProvider.GetService<ITokenStorage>();
 
             SetContentView(Resource.Layout.activity_authorization);
@@ -86,9 +79,28 @@ namespace RROScoreBoard
             _errorTextView = FindViewById<TextView>(Resource.Id.auth_error_text);
         }
 
+        private void VmOnErrorOccured(object sender, AuthorizationViewModel.AuthorizationErrorEventArgs eventArgs)
+        {
+            switch (eventArgs.ErrorType)
+            {
+                case AuthorizationViewModel.AuthorizationError.UserNotFound:
+                case AuthorizationViewModel.AuthorizationError.InvalidPassword:
+                    _passEditText.Text = "";
+                    _errorTextView.Visibility = ViewStates.Visible;
+                    break;
+                case AuthorizationViewModel.AuthorizationError.NoNetwork:
+                    Toast.MakeText(this, Resource.String.internet_error, ToastLength.Short).Show();
+                    break;
+                case AuthorizationViewModel.AuthorizationError.Unknown:
+                    Toast.MakeText(this, Resource.String.unknown_error, ToastLength.Short).Show();
+                    break;
+            }
+        }
+
         protected override void OnDestroy()
         {
             _vm.PropertyChanged -= VmOnPropertyChanged;
+            _vm.ErrorOccured -= VmOnErrorOccured;
             base.OnDestroy();
         }
 

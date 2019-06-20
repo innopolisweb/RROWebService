@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+	android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+	
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+  
+			<TextView 
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+				android:text="@string/alert"
+			    android:textSize="22sp"
+			    android:gravity="center"
+				android:layout_margin="5dp"
+			    android:textStyle="bold"/>
+
+			<TextView 
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/confirmation_message"
+				android:textSize="19sp"
+				android:gravity="center"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:gravity="center"
+				android:id="@+id/oml_sending_confirmation_team_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_red_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_yellow_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_green_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_white1_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_white2_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_blue_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_battary1_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_battary2_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_robot_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_wall1_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_wall2_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_time1_text_view"/>
+
+			<TextView
+				android:layout_margin="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:id="@+id/oml_sending_confirmation_time2_text_view"/>
+
+			<CheckBox
+				android:layout_marginTop="10dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:text="@string/team_confirmation"
+				android:id="@+id/oml_sending_confirmation_team_confirm_check_box"/>
+
+			<LinearLayout
+				android:gravity="right"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal">
+
+				<Button
+					android:enabled="false"
+					android:text="@string/save"
+					android:id="@+id/oml_saving_confirmation_save_button"
+					android:layout_margin="3dp"
+					style="@android:style/Widget.Material.Button.Borderless.Colored"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+
+				<Button
+					android:text="@string/cancel"
+					android:layout_margin="3dp"
+					android:id="@+id/oml_confirmation_cancel_button"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					style="@android:style/Widget.Material.Button.Borderless.Colored"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</ScrollView>
+  
+</LinearLayout>

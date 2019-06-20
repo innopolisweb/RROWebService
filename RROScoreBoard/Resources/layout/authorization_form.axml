@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:id="@+id/auth_form"
+		android:visibility="visible"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+	
+		<TextView 
+			android:layout_marginBottom="16dp"
+			android:gravity="center"
+			android:textColor="@android:color/black"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/auth"
+			android:textSize="26sp"/>
+	
+		<TextView
+			android:visibility="gone"
+			android:id="@+id/auth_error_text"
+			android:layout_marginBottom="10dp"
+			android:gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/auth_error"
+			android:textColor="@color/colorAccent"
+			android:textSize="20sp"/>
+	
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/enter_login">
+	
+				<android.support.design.widget.TextInputEditText
+					android:textSize="20sp"
+					android:inputType="textShortMessage"
+					android:id="@+id/auth_login_edit_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"/>
+	
+		</android.support.design.widget.TextInputLayout>
+	
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/enter_pass">
+	
+			<android.support.design.widget.TextInputEditText
+				android:inputType="textPassword"
+				android:textSize="20sp"
+				android:id="@+id/auth_pass_edit_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+	
+		</android.support.design.widget.TextInputLayout>
+	
+		<Button
+			android:enabled="false"
+			android:textSize="16sp"
+			android:id="@+id/auth_login_button"
+			style="@style/Widget.AppCompat.Button.Colored"
+			android:layout_marginTop="5dp"
+			android:text="@string/login"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+	
+	</LinearLayout>
+	
+	<LinearLayout 
+		android:visibility="gone"
+		android:id="@+id/auth_loading"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+	
+		<ProgressBar
+			android:id="@+id/loading_spinner"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_marginTop="10dp"
+			android:indeterminateTintMode="src_atop"
+			android:indeterminateTint="@color/colorAccent" />
+	
+		<TextView
+			android:gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="20sp"
+			android:text="@string/loading"
+			android:textColor="@color/colorAccent"/>
+	
+	</LinearLayout>
+
+</FrameLayout>

@@ -1,4 +1,10 @@
 <resources>
+  <string name="try_again">Try again</string>
+  <string name="round_not_started">Round not started</string>
+  <string name="tour_not_started">Competition not started yet</string>
+  <string name="unknown_error">Unknown error occured</string>
+  <string name="error_occured">Error occured</string>
+  <string name="internet_error">Error occured while loading data. Check your network connection</string>
   <string name="app_name">RROScoreBoard</string>
   <string name="action_settings">Settings</string>
   <string name="enter_login">Login</string>
@@ -7,4 +13,79 @@
   <string name="auth">Authentication</string>
   <string name="loading">Loading...</string>
   <string name="auth_error">Invalid login or password</string>
+  <string name="red_block">Red</string>
+  <string name="yellow_block">Yellow</string>
+  <string name="green_block">Green</string>
+  <string name="white_block">White</string>
+  <string name="blue_block">Blue</string>
+  <string name="child">Child</string>
+  <string name="adult">Adult</string>
+  <string name="visitor">Visitor</string>
+  <string name="blue_block_description">Stays in the origin</string>
+  <string name="battary_block1">Battery block 1</string>
+  <string name="battary_block2">Battery block 2</string>
+  <string name="robot">Robot</string>
+  <string name="robot_decription">Correct full stop</string>
+  <string name="wall1">Angle wall</string>
+  <string name="wall2">Straight wall</string>
+  <string name="wall_description">Is not broken and moved</string>
+  <string name="time1">Time 1</string>
+  <string name="time2">Time 2</string>
+  <string name="save">Save</string>
+  <string name="cancel">Cancel</string>
+  <string name="team_format">team: %1$s</string>
+  <string name="red_format">red: %1$s</string>
+  <string name="yellow_format">yellow: %1$s</string>
+  <string name="green_format">green: %1$s</string>
+  <string name="white1_format">white (adult): %1$s</string>
+  <string name="white2_format">white (child): %1$s</string>
+  <string name="blue_format">blue: %1$s</string>
+  <string name="battary1_format">battery 1: %1$s</string>
+  <string name="battary2_format">battery 2: %1$s</string>
+  <string name="robot_format">robot: %1$s</string>
+  <string name="wall1_format">angle wall: %1$s</string>
+  <string name="wall2_format">straight wall: %1$s</string>
+  <string name="time1_format">time 1: %1$s</string>
+  <string name="time2_format">time 2: %1$s</string>
+  <string name="category_format">Category: %1$s</string>
+  <string name="round_format">Round: %1$s</string>
+  <string name="polygon_format">Polygon: %1$s</string>
+  <string name="tour_format">Tour: %1$s</string>
+  <string name="send">Send</string>
+  <string name="category_oml">OML</string>
+  <string name="category_osr">OSR</string>
+  <string name="category_ost">OST</string>
+  <string name="tour_cvalification">cvalification</string>
+  <string name="tour_final">final</string>
+  <string name="sending">Sending</string>
+  <string name="sent">Sent</string>
+  <string name="alert">Alert</string>
+  <string name="confirmation_message">You are about to save data! It will be impossible to undo later. Check input data below and if you found mistakes, click cancel and then edit data</string>
+  <string name="team_confirmation">Team agrees with this results</string>
+  <string-array name="passenger_states">
+    <item>Not selected</item>
+    <item>Correctly stays</item>
+    <item>Correctly lies</item>
+    <item>Correctly partialy</item>
+    <item>Incorrectly stays</item>
+    <item>Incorrectly lies</item>
+  </string-array>
+  <string-array name="blue_block_state">
+    <item>not it the origin</item>
+    <item>in the origin</item>
+  </string-array>
+  <string-array name="battary_state">
+    <item>Not selected</item>
+    <item>Fully stays</item>
+    <item>Patially stays</item>
+    <item>None</item>
+  </string-array>
+  <string-array name="robot_state">
+    <item>incorrect</item>
+    <item>correct full stop</item>
+  </string-array>
+  <string-array name="wall_state">
+    <item>broken or moved</item>
+    <item>not broken and not moved</item>
+  </string-array>
 </resources>

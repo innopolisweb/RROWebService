@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using Android.Util;
 using DataModelCore.ObjectModel.Abstractions;
 using Newtonsoft.Json;
 using RROScoreBoard.Annotations;
@@ -14,19 +15,35 @@ namespace RROScoreBoard.ViewModels
 {
     public class ScoreBoardViewModel : INotifyPropertyChanged
     {
+
+        public delegate void ScoreBoardErrorEventHandler(object sender, ScoreBoardErrorEventArgs eventArgs);
+
+        public event ScoreBoardErrorEventHandler ErrorOccured;
+
         private readonly ITokenStorage _tokenStorage;
 
         private string _category;
+        private string _judgeId;
         private bool _isBusy;
-        private bool _error;
-        private int _tour;
+        private int? _tour;
         private string _judgeName;
-        private int _round;
-        private int _polygon;
+        private int? _round;
+        private int? _polygon;
+        private List<RROTeam> _teams;
 
         public ScoreBoardViewModel()
         {
             _tokenStorage = ServiceProvider.GetService<ITokenStorage>();
+        }
+
+        public string JudgeId
+        {
+            get => _judgeId;
+            set
+            {
+                _judgeId = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Category
@@ -49,17 +66,7 @@ namespace RROScoreBoard.ViewModels
             }
         }
 
-        public bool Error
-        {
-            get => _error;
-            set
-            {
-                _error = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int Tour
+        public int? Tour
         {
             get => _tour;
             set
@@ -79,7 +86,7 @@ namespace RROScoreBoard.ViewModels
             }
         }
 
-        public int Round
+        public int? Round
         {
             get => _round;
             set
@@ -89,7 +96,7 @@ namespace RROScoreBoard.ViewModels
             }
         }
 
-        public int Polygon
+        public int? Polygon
         {
             get => _polygon;
             set
@@ -99,66 +106,78 @@ namespace RROScoreBoard.ViewModels
             }
         }
 
-        public async void LoadData()
+        public List<RROTeam> Teams
         {
+            get => _teams;
+            set
+            {
+                _teams = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public async void LoadData(bool forceNet = false)
+        {
+            if (Teams != null && !forceNet) return;
+
             IsBusy = true;
-            var token = _tokenStorage.GetToken();
-            var judgeResponse = await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/judge?token={token}");
-            if (!judgeResponse.IsSuccessStatusCode)
+            try
             {
-                Error = true;
-                IsBusy = false;
-                return;
-            }
-                                                 
-            var judge = JsonConvert.DeserializeObject<RROJudge>(await judgeResponse.Content.ReadAsStringAsync());
-            JudgeName = judge.JudgeName;
-            Polygon = judge.Polygon;
+                var token = _tokenStorage.GetToken();
 
-            var tourResponse = await new HttpClient().GetAsync("https://rro.azurewebsites.net/api/currenttour");
-            if (!tourResponse.IsSuccessStatusCode)
+                var judgeResponse =
+                    await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/judge?token={token}");
+                var judge = JsonConvert.DeserializeObject<RROJudge>(await judgeResponse.Content.ReadAsStringAsync());
+
+                var tourResponse = await new HttpClient().GetAsync("https://rro.azurewebsites.net/api/currenttour");
+                var tour = Int32.Parse(await tourResponse.Content.ReadAsStringAsync());
+
+                if (tour == -1) throw new ScoreBoardException(ScoreBoardError.TourNotStarted);
+
+
+                var teamsResponse = await new HttpClient().GetAsync(
+                    $"https://rro.azurewebsites.net/api/teams?tour={tour}&polygon={judge.Polygon}");
+                var teams = JsonConvert.DeserializeObject<List<RROTeam>>(
+                    await teamsResponse.Content.ReadAsStringAsync());
+
+                var category = teams.First().Category;
+
+                var roundResponse =
+                    await new HttpClient().GetAsync(
+                        $"https://rro.azurewebsites.net/api/currentround?category={category}");
+                var round = Int32.Parse(await roundResponse.Content.ReadAsStringAsync());
+
+                if (round == -1) throw new ScoreBoardException(ScoreBoardError.RoundNotStarted);
+
+
+                Category = category;
+                Tour = tour;
+                JudgeName = judge.JudgeName;
+                Polygon = judge.Polygon;
+                JudgeId = judge.JudgeId;
+                Round = round;
+                Teams = teams;
+            }
+            catch (HttpRequestException e)
             {
-                Error = true;
-                IsBusy = false;
-                return;
+                Log.Error("RROScoreBoard", e.StackTrace);
+                ErrorOccured?.Invoke(this, new ScoreBoardErrorEventArgs(ScoreBoardError.NoInternet));
             }
-
-            var tour = Int32.Parse(await tourResponse.Content.ReadAsStringAsync());
-            Tour = tour;
-
-            var teamsResponse =
-                await new HttpClient().GetAsync(
-                    $"https://rro.azurewebsites.net/api/teams?tour={Tour}&polygon={Polygon}");
-            if (!teamsResponse.IsSuccessStatusCode)
+            catch (ScoreBoardException e)
             {
-                Error = true;
-                IsBusy = false;
-                return;
-            }
+                Log.Error("RROScoreBoard", e.StackTrace);
+                ErrorOccured?.Invoke(this, new ScoreBoardErrorEventArgs(e.ErrorType));
 
-            var teams = JsonConvert.DeserializeObject<List<RROTeam>>(await teamsResponse.Content.ReadAsStringAsync());
-            if (!teams.Any())
+            }
+            catch (Exception e)
             {
-                Error = true;
-                IsBusy = false;
-                return;
+                Log.Error("RROScoreBoard", e.StackTrace);
+                ErrorOccured?.Invoke(this, new ScoreBoardErrorEventArgs(ScoreBoardError.Unknown));
             }
-
-            var category = teams.First().Category;
-            Category = category;
-
-            var roundResponse = await new HttpClient().GetAsync("https://rro.azurewebsites.net/api/currentround");
-            if (!roundResponse.IsSuccessStatusCode)
+            finally
             {
-                Error = true;
                 IsBusy = false;
-                return;
             }
-
-            var round = Int32.Parse(await roundResponse.Content.ReadAsStringAsync());
-            Round = round;
-
-            IsBusy = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -167,6 +186,32 @@ namespace RROScoreBoard.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public enum ScoreBoardError
+        {
+            TourNotStarted,
+            RoundNotStarted,
+            NoInternet,
+            Unknown
+        }
+
+        public class ScoreBoardErrorEventArgs : EventArgs
+        {
+            public ScoreBoardErrorEventArgs(ScoreBoardError errorType)
+            {
+                ErrorType = errorType;
+            }
+            public ScoreBoardError ErrorType { get; }
+        }
+
+        private class ScoreBoardException : Exception
+        {
+            public ScoreBoardException(ScoreBoardError errorType)
+            {
+                ErrorType = errorType;
+            }
+            public ScoreBoardError ErrorType { get; }
         }
     }
 }

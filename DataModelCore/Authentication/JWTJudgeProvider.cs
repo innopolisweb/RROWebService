@@ -10,7 +10,7 @@ namespace DataModelCore.Authentication
         public static string CreateToken(JudgePayload payload)
         {
             var key = Encoding.UTF8.GetBytes("roo-web-service-secure-Hrjkld-423y7842.f");
-            var header = new JWTHeader {Algorithm = "RS256"};
+            var header = new JWTHeader { Algorithm = "RS256" };
 
             var headerBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header));
             var payloadBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload));
@@ -30,19 +30,26 @@ namespace DataModelCore.Authentication
 
         public static JudgePayload DecodeToken(string token)
         {
-            var parts = token.Split('.');
+            var parts = token?.Split('.');
+            if (parts?.Length != 3) return null;
+
             var header = parts[0];
             var payload = parts[1];
             var crypto = Base64UrlDecode(parts[2]);
+            if (crypto == null) return null;
 
-            var headerJson = Encoding.UTF8.GetString(Base64UrlDecode(header));
-            var payloadJson = Encoding.UTF8.GetString(Base64UrlDecode(payload));
+            var decodedHeader = Base64UrlDecode(header);
+            if (decodedHeader == null) return null;
+            var decodedPayload = Base64UrlDecode(payload);
+            if (decodedPayload == null) return null;
+
+            var headerJson = Encoding.UTF8.GetString(decodedHeader);
+            var payloadJson = Encoding.UTF8.GetString(decodedPayload);
 
             var headerData = JsonConvert.DeserializeObject<JWTHeader>(headerJson);
             var payloadData = JsonConvert.DeserializeObject<JudgePayload>(payloadJson);
 
-            if (headerData.Algorithm != "RS256")
-                throw new Exception("Unknown hashing algorithm");
+            if (headerData.Algorithm != "RS256") return null;
 
             var bytesToSign = Encoding.UTF8.GetBytes(header + '.' + payload);
             var key = Encoding.UTF8.GetBytes("roo-web-service-secure-Hrjkld-423y7842.f");
@@ -52,11 +59,7 @@ namespace DataModelCore.Authentication
             var decodedCrypto = Convert.ToBase64String(crypto);
             var decodedSignature = Convert.ToBase64String(signature);
 
-            if (decodedCrypto != decodedSignature)
-            {
-                throw new ApplicationException("Invalid signature");
-            }
-            return payloadData;
+            return decodedCrypto == decodedSignature ? payloadData : null;
         }
 
         private static string Base64UrlEncode(byte[] input)
@@ -78,7 +81,7 @@ namespace DataModelCore.Authentication
                 case 0: break; // No pad chars in this case
                 case 2: output += "=="; break; // Two pad chars
                 case 3: output += "="; break; // One pad char
-                default: throw new Exception("Illegal base64url string");
+                default: return null;
             }
             var converted = Convert.FromBase64String(output); // Standard base64 decoder
             return converted;

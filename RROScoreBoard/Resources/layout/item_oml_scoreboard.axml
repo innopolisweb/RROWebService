@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:background="?android:attr/selectableItemBackground"
+	android:clickable="true"
+	android:padding="5dp">
+	
+	<TextView
+		android:layout_width="70dp"
+		android:layout_height="wrap_content"
+		android:textSize="18sp"
+		android:gravity="center"
+		android:id="@+id/item_oml_sb_team_id"/>
+
+	<View
+		android:layout_width="2dp"
+		android:layout_height="match_parent"
+		android:background="@android:color/darker_gray"/>
+
+	<FrameLayout
+		android:layout_width="0dp"
+		android:layout_weight="1"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textSize="14sp"
+			android:gravity="center"
+			android:id="@+id/item_oml_sb_short_text_data"/>
+
+		<LinearLayout
+			android:layout_margin="5dp"
+			android:visibility="gone"
+			android:id="@+id/item_oml_sb_loading"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical">
+
+			<ProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:indeterminateTintMode="src_atop"
+				android:indeterminateTint="@color/colorAccent" />
+		
+			<TextView
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:textSize="12sp"
+				android:text="@string/loading"
+				android:textColor="@color/colorAccent"/>
+
+		</LinearLayout>
+
+	</FrameLayout>
+
+	<View 
+		android:layout_width="2dp"
+		android:layout_height="match_parent"
+		android:background="@android:color/darker_gray"/>
+
+	<Button
+		style="@style/Widget.AppCompat.Button.Borderless.Colored"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="18sp"
+		android:gravity="center"
+		android:text="@string/send"
+		android:id="@+id/item_oml_sb_send_button"/>
+
+</LinearLayout>
