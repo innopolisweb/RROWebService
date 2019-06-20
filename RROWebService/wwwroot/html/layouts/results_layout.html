@@ -22,22 +22,32 @@
     <main class="mdl-layout__content">
         <div class="mdl-tabs mdl-js-tabs">
             <div class="mdl-tabs__tab-bar">
-                <a href="#qualification" class="mdl-tabs__tab is-active">Квалификационный</a>
-                <a href="#final" class="mdl-tabs__tab">Финальный</a>
-                <a href="#overall" class="mdl-tabs__tab">Итог</a>
+                <a href="#tour1" class="mdl-tabs__tab is-active">1й тур</a>
+                <a href="#tour2" class="mdl-tabs__tab">2й тур</a>
+                <a href="#final" class="mdl-tabs__tab">Итоги</a>
             </div>
 
-            <div class="mdl-tabs__panel is-active" id="qualification">
+            <div class="mdl-tabs__panel is-active" id="tour1">
+                <select onchange="renderExpandedTable(this)" class="expanded-selector">
+                    <option value="1-4">Основная младшая</option>
+                    <option value="1-5">Основная средняя</option>
+                    <option value="1-6">Основная старшая</option>
+                </select>
 
-                <select onchange="itemChange(this)">
-                    <option value="11">Основная младшая</option>
-                    <option value="12">Основная средняя</option>
-                    <option value="13">Основная старшая</option>
+                <select onchange="renderPointsTable(this)" class="points-selector">
+                    <option value="1-1">Основная младшая</option>
+                    <option value="1-2">Основная средняя</option>
+                    <option value="1-3">Основная старшая</option>
+                </select>
+
+                <select onchange="chooseType(this)" class="type-selector">
+                    <option value="1-1">Результаты тура</option>
+                    <option value="1-2">Результаты попыток</option>
                 </select>
 
                 <div class="content1">
                     <div class="table-wrapper">
-                        <table>
+                        <table class="points points-tour1">
                             <thead>
                                 <!-- Here is your header form-->
                             </thead>
@@ -51,13 +61,13 @@
 
                 <div class="content2">
                     <div class="table-wrapper">
-                        <table>
+                        <table class="points points-tour1">
                             <thead>
-                                <!-- Here is your header form-->
+                            <!-- Here is your header form-->
                             </thead>
 
                             <tbody>
-                                <!-- Here is your row forms -->
+                            <!-- Here is your row forms -->
                             </tbody>
                         </table>
                     </div>
@@ -65,13 +75,158 @@
 
                 <div class="content3">
                     <div class="table-wrapper">
-                        <table>
+                        <table class="points points-tour1">
                             <thead>
-                                <!-- Here is your header form-->
+                            <!-- Here is your header form-->
                             </thead>
 
                             <tbody>
-                                <!-- Here is your row forms -->
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content4">
+                    <div class="table-wrapper">
+                        <table class="oml-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content5">
+                    <div class="table-wrapper">
+                        <table class="osr-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content6">
+                    <div class="table-wrapper">
+                        <table class="ost-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdl-tabs__panel" id="tour2">
+                <select onchange="renderPointsTable(this)" class="points-selector">
+                    <option value="2-1">Основная младшая</option>
+                    <option value="2-2">Основная средняя</option>
+                    <option value="2-3">Основная старшая</option>
+                </select>
+
+                <select onchange="renderExpandedTable(this)" class="expanded-selector">
+                    <option value="2-4">Основная младшая</option>
+                    <option value="2-5">Основная средняя</option>
+                    <option value="2-6">Основная старшая</option>
+                </select>
+
+                <select onchange="chooseType(this)" class="type-selector">
+                    <option value="2-1">Результаты тура</option>
+                    <option value="2-2">Результаты попыток</option>
+                </select>
+
+                <div class="content1">
+                    <div class="table-wrapper">
+                        <table class="points points-tour2">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content2">
+                    <div class="table-wrapper">
+                        <table class="points points-tour2">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content3">
+                    <div class="table-wrapper">
+                        <table class="points points-tour2">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content4">
+                    <div class="table-wrapper">
+                        <table class="oml-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content5">
+                    <div class="table-wrapper">
+                        <table class="osr-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content6">
+                    <div class="table-wrapper">
+                        <table class="ost-expanded">
+                            <thead>
+                            <!-- Here is your header form-->
+                            </thead>
+
+                            <tbody>
+                            <!-- Here is your row forms -->
                             </tbody>
                         </table>
                     </div>
@@ -80,66 +235,15 @@
 
             <div class="mdl-tabs__panel" id="final">
 
-                <select onchange="itemChange(this)">
-                    <option value="21">Основная младшая</option>
-                    <option value="22">Основная средняя</option>
-                    <option value="23">Основная старшая</option>
+                <select onchange="renderPointsTable(this)">
+                    <option value="3-1">Основная младшая</option>
+                    <option value="3-2">Основная средняя</option>
+                    <option value="3-3">Основная старшая</option>
                 </select>
 
                 <div class="content1">
                     <div class="table-wrapper">
-                        <table>
-                            <thead>
-                            <!-- Here is your header form-->
-                            </thead>
-
-                            <tbody>
-                            <!-- Here is your row forms -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="content2">
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                            <!-- Here is your header form-->
-                            </thead>
-
-                            <tbody>
-                            <!-- Here is your row forms -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="content3">
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                            <!-- Here is your header form-->
-                            </thead>
-
-                            <tbody>
-                            <!-- Here is your row forms -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mdl-tabs__panel" id="overall">
-
-                <select onchange="itemChange(this)">
-                    <option value="31">Основная младшая</option>
-                    <option value="32">Основная средняя</option>
-                    <option value="33">Основная старшая</option>
-                </select>
-
-                <div class="content1">
-                    <div class="table-wrapper">
-                        <table>
+                        <table class="points points-final">
                             <thead>
                                 <!-- Here is your header form-->
                             </thead>
@@ -153,13 +257,13 @@
 
                 <div class="content2">
                     <div class="table-wrapper">
-                        <table>
+                        <table class="points points-final">
                             <thead>
-                                <!-- Here is your header form-->
+                            <!-- Here is your header form-->
                             </thead>
 
                             <tbody>
-                                <!-- Here is your row forms -->
+                            <!-- Here is your row forms -->
                             </tbody>
                         </table>
                     </div>
@@ -167,60 +271,67 @@
 
                 <div class="content3">
                     <div class="table-wrapper">
-                        <table>
+                        <table class="points points-final">
                             <thead>
-                                <!-- Here is your header form-->
+                            <!-- Here is your header form-->
                             </thead>
 
                             <tbody>
-                                <!-- Here is your row forms -->
+                            <!-- Here is your row forms -->
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="content4">
+                    <!-- Empty -->
+                </div>
+                <div class="content5">
+                    <!-- Empty -->
+                </div>
+                <div class="content6">
+                    <!-- Empty -->
                 </div>
             </div>
         </div>
     </main>
 </div>
 <script>
-    function itemChange(sender) {
-        if (sender.value == 11) {
-            document.getElementsByClassName("content1")[0].style.display = "inline-block";
-            document.getElementsByClassName("content2")[0].style.display = "none";
-            document.getElementsByClassName("content3")[0].style.display = "none";
-        } else if (sender.value == 12) {
-            document.getElementsByClassName("content1")[0].style.display = "none";
-            document.getElementsByClassName("content2")[0].style.display = "inline-block";
-            document.getElementsByClassName("content3")[0].style.display = "none";
-        } else if (sender.value == 13) {
-            document.getElementsByClassName("content1")[0].style.display = "none";
-            document.getElementsByClassName("content2")[0].style.display = "none";
-            document.getElementsByClassName("content3")[0].style.display = "inline-block";
-        } else if (sender.value == 21) {
-            document.getElementsByClassName("content1")[1].style.display = "inline-block";
-            document.getElementsByClassName("content2")[1].style.display = "none";
-            document.getElementsByClassName("content3")[1].style.display = "none";
-        } else if (sender.value == 22) {
-            document.getElementsByClassName("content1")[1].style.display = "none";
-            document.getElementsByClassName("content2")[1].style.display = "inline-block";
-            document.getElementsByClassName("content3")[1].style.display = "none";
-        } else if (sender.value == 23) {
-            document.getElementsByClassName("content1")[1].style.display = "none";
-            document.getElementsByClassName("content2")[1].style.display = "none";
-            document.getElementsByClassName("content3")[1].style.display = "inline-block";
-        } else if (sender.value == 31) {
-            document.getElementsByClassName("content1")[2].style.display = "inline-block";
-            document.getElementsByClassName("content2")[2].style.display = "none";
-            document.getElementsByClassName("content3")[2].style.display = "none";
-        } else if (sender.value == 32) {
-            document.getElementsByClassName("content1")[2].style.display = "none";
-            document.getElementsByClassName("content2")[2].style.display = "inline-block";
-            document.getElementsByClassName("content3")[2].style.display = "none";
-        } else if (sender.value == 33) {
-            document.getElementsByClassName("content1")[2].style.display = "none";
-            document.getElementsByClassName("content2")[2].style.display = "none";
-            document.getElementsByClassName("content3")[2].style.display = "inline-block";
+    function renderPointsTable(sender) {
+        let tab = sender.value[0];
+        let visible = sender.value[2];
+
+        for (let i = 1; i <= 6; i++) {
+            document.getElementsByClassName("content"+i)[tab-1].style.display = "none";
         }
+        document.getElementsByClassName("content"+visible)[tab-1].style.display = "inline-block";
+    }
+
+    function chooseType(sender) {
+        let tab = sender.value[0];
+        let visible = sender.value[2];
+
+        if (visible == 1) {
+            document.getElementsByClassName("expanded-selector")[tab-1].style.display = "none";
+            document.getElementsByClassName("points-selector")[tab-1].style.display = "inline-block";
+
+            renderPointsTable(document.getElementsByClassName("points-selector")[tab-1]);
+        } else if (visible == 2) {
+            document.getElementsByClassName("expanded-selector")[tab-1].style.display = "inline-block";
+            document.getElementsByClassName("points-selector")[tab-1].style.display = "none";
+
+            renderExpandedTable(document.getElementsByClassName("expanded-selector")[tab-1]);
+        }
+    }
+
+    function renderExpandedTable(sender) {
+        let tab = sender.value[0];
+        let visible = sender.value[2];
+
+        for (let i = 1; i <= 6; i++) {
+            document.getElementsByClassName("content"+i)[tab-1].style.display = "none";
+        }
+        document.getElementsByClassName("content"+visible)[tab-1].style.display = "inline-block";
     }
 </script>
 </body>
