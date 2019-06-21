@@ -36,30 +36,6 @@ td {
     background-color: #cfcfcf;
 }
 
-.osr-expanded tr:nth-child(30n + 1) td,
-.osr-expanded tr:nth-child(30n + 2) td,
-.osr-expanded tr:nth-child(30n + 3) td,
-.osr-expanded tr:nth-child(30n + 4) td,
-.osr-expanded tr:nth-child(30n + 5) td,
-.osr-expanded tr:nth-child(30n + 6) td,
-.osr-expanded tr:nth-child(30n + 7) td,
-.osr-expanded tr:nth-child(30n + 8) td,
-.osr-expanded tr:nth-child(30n + 9) td,
-.osr-expanded tr:nth-child(30n + 10) td,
-.osr-expanded tr:nth-child(30n + 11) td,
-.osr-expanded tr:nth-child(30n + 12) td,
-.osr-expanded tr:nth-child(30n + 13) td,
-.osr-expanded tr:nth-child(30n + 14) td,
-.osr-expanded tr:nth-child(30n + 15) td {
-    background-color: #cfcfcf;
-}
-
-.ost-expanded tr:nth-child(6n + 1) td,
-.ost-expanded tr:nth-child(6n + 2) td,
-.ost-expanded tr:nth-child(6n + 3) td {
-    background-color: #cfcfcf;
-}
-
 .points tr:nth-child(odd) td {
     background-color: #cfcfcf;
 }
