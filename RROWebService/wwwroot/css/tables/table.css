@@ -18,25 +18,49 @@ td {
     background-color: white;
 }
 
-.oml-expanded tr:nth-child(30n + 1) td,
-.oml-expanded tr:nth-child(30n + 2) td,
-.oml-expanded tr:nth-child(30n + 3) td,
-.oml-expanded tr:nth-child(30n + 4) td,
-.oml-expanded tr:nth-child(30n + 5) td,
-.oml-expanded tr:nth-child(30n + 6) td,
-.oml-expanded tr:nth-child(30n + 7) td,
-.oml-expanded tr:nth-child(30n + 8) td,
-.oml-expanded tr:nth-child(30n + 9) td,
-.oml-expanded tr:nth-child(30n + 10) td,
-.oml-expanded tr:nth-child(30n + 11) td,
-.oml-expanded tr:nth-child(30n + 12) td,
-.oml-expanded tr:nth-child(30n + 13) td,
-.oml-expanded tr:nth-child(30n + 14) td,
-.oml-expanded tr:nth-child(30n + 15) td {
+.oml-expanded tr:nth-child(30n - 14) td,
+.oml-expanded tr:nth-child(30n - 13) td,
+.oml-expanded tr:nth-child(30n - 12) td,
+.oml-expanded tr:nth-child(30n - 11) td,
+.oml-expanded tr:nth-child(30n - 10) td,
+.oml-expanded tr:nth-child(30n - 9) td,
+.oml-expanded tr:nth-child(30n - 8) td,
+.oml-expanded tr:nth-child(30n - 7) td,
+.oml-expanded tr:nth-child(30n - 6) td,
+.oml-expanded tr:nth-child(30n - 5) td,
+.oml-expanded tr:nth-child(30n - 4) td,
+.oml-expanded tr:nth-child(30n - 3) td,
+.oml-expanded tr:nth-child(30n - 2) td,
+.oml-expanded tr:nth-child(30n - 1) td,
+.oml-expanded tr:nth-child(30n) td {
     background-color: #cfcfcf;
 }
 
-.points tr:nth-child(odd) td {
+.oml-expanded tr:nth-child(1) th:nth-child(3),
+.oml-expanded tr:nth-child(2) th:nth-child(1),
+.oml-expanded tr:nth-child(2) th:nth-child(2),
+.oml-expanded tr:nth-child(2) th:nth-child(3),
+.oml-expanded tr:nth-child(2) th:nth-child(4),
+.oml-expanded tr:nth-child(3) th:nth-child(1),
+.oml-expanded tr:nth-child(3) th:nth-child(2),
+.oml-expanded tr:nth-child(3) th:nth-child(3),
+.oml-expanded tr:nth-child(3) th:nth-child(4),
+.oml-expanded tr:nth-child(5) th:nth-child(1),
+.oml-expanded tr:nth-child(5) th:nth-child(2) {
+    background-color: rgba(0, 128, 0, 0.53);
+}
+
+.oml-expanded tr:nth-child(1) th:nth-child(5),
+.oml-expanded tr:nth-child(2) th:nth-child(5),
+.oml-expanded tr:nth-child(3) th:nth-child(5),
+.oml-expanded tr:nth-child(3) th:nth-child(6) {
+    background-color: rgba(224, 0, 0, 0.63);
+}
+
+
+
+
+.points tr:nth-child(even) td {
     background-color: #cfcfcf;
 }
 
