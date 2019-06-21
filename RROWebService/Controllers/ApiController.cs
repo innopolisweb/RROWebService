@@ -6,6 +6,7 @@ using DataModelCore.Authentication;
 using DataModelCore.DataContexts;
 using DataModelCore.ObjectModel;
 using DataModelCore.ObjectModel.Abstractions;
+using DataModelCore.ObjectModel.Primitives;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RROWebService.Controllers
@@ -14,6 +15,20 @@ namespace RROWebService.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
+
+        private static string RefreshTokenInternal(string token)
+        {
+            var payload = JWTJudgeProvider.DecodeToken(token);
+            if (payload == null) return null;
+
+            payload.OpenTime = DateTime.Now;
+            payload.Expires = payload.OpenTime.AddMinutes(20);
+
+            var newToken = JWTJudgeProvider.CreateToken(payload);
+            return newToken;
+
+        }
+
         private readonly CompetitionContext _dbContext;
 
         public ApiController()
@@ -22,90 +37,106 @@ namespace RROWebService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Authorize(string judgeId, string pass, string serviceId)
+        public ActionResult<string> Authorize(string judgeId, string pass, string serviceId)
         {
             var currentTour =
                 (from ct in _dbContext.CurrentTour
-                    select ct.Current).Last();   
+                    select ct.Current).Last();
 
-            switch (currentTour)
+            var judge = (currentTour == 0
+                ? (from tJudge in _dbContext.JudgesCv
+                    where tJudge.JudgeId == judgeId
+                    select tJudge).OfType<RROJudge>()
+
+                : (from tJudge in _dbContext.JudgesFin
+                    where tJudge.JudgeId == judgeId
+                    select tJudge).OfType<RROJudge>()).FirstOrDefault();
+
+            if (judge == null) return BadRequest(AuthenticationError.UserNotFound);
+
+            if (currentTour == 0)
             {
-                case 0:
-                    var getJudgeCv = from judge in _dbContext.JudgesCv
-                        where judge.JudgeId == judgeId
-                        select judge;
-
-                    if (!getJudgeCv.Any())
-                    {
-                        return BadRequest("User not found");
-                    }
-
-                    var judgeCv = getJudgeCv.First();
-                    if (!judgeCv.PassHash.Equals(pass)) return BadRequest("Incorrect password");
-
-                    var payloadCv = JudgePayload.Create(judgeCv, 0, serviceId);
-                    var serviceCv =
-                        (from service in _dbContext.Services
-                            where service.ServiceId == payloadCv.Service
-                            select service).FirstOrDefault();
-                    if (serviceCv == null) return BadRequest("Unknown service");
-
-                    var tokenCv = JWTJudgeProvider.CreateToken(payloadCv);
-                    JWTJudgeFactory.AddToken(judgeCv.JudgeId, tokenCv, true);
-
-                    return Ok(tokenCv);
-
-
-                case 1:
-                    var getJudgeFin = from judge in _dbContext.JudgesFin
-                        where judge.JudgeId == judgeId
-                        select judge;
-
-                    if (!getJudgeFin.Any())
-                    {
-                        return BadRequest("User not found");
-                    }
-
-                    var judgeFin = getJudgeFin.First();
-                    if (!judgeFin.PassHash.Equals(pass)) return BadRequest("Incorrect password");
-
-                    var payloadFin = JudgePayload.Create(judgeFin, 1, serviceId);
-                    var tokenFin = JWTJudgeProvider.CreateToken(payloadFin);
-                    JWTJudgeFactory.AddToken(judgeFin.JudgeId, tokenFin, true);
-
-                    return Ok(tokenFin);
-                
-
-                default:
-                    return BadRequest("Server error");
+                if (!((RROJudgeCv) judge).PassHash.Equals(pass))
+                    return BadRequest(AuthenticationError.IncorrectPassword);
             }
+            else
+            {
+                if (!((RROJudgeFin) judge).PassHash.Equals(pass))
+                    return BadRequest(AuthenticationError.IncorrectPassword);
+            }
+
+            var payload = JudgePayload.Create(judge, currentTour, serviceId);
+            var service =
+                (from tService in _dbContext.Services
+                    where tService.ServiceId == payload.Service
+                    select tService).FirstOrDefault();
+            if (service == null) return BadRequest(AuthenticationError.UnknownService);
+
+            var tokenCv = JWTJudgeProvider.CreateToken(payload);
+            return tokenCv;
         }
 
         [HttpGet]
-        public IActionResult CheckToken(string token)
+        public ActionResult<TokenState> CheckToken(string token)
         {
-            JudgePayload payload;
-            try
-            {
-                payload = JWTJudgeProvider.DecodeToken(token);
-            }
-            catch (Exception)
-            {
-                return Ok("Invalid");
-            }
+            var payload = JWTJudgeProvider.DecodeToken(token);
+            if (payload == null) return TokenState.Invalid;
 
-            if (payload.Expires <= DateTime.Now) return Ok("Expired");
+            if (payload.Expires <= DateTime.Now) return TokenState.Expired;
 
-            var tokens = JWTJudgeFactory.GetAllTokensForJudge(payload.JudgeId);
-            if (tokens.Any(t => t == token)) return Ok("Valid");
-            return Ok("Invalid");
+            return TokenState.Valid;
         }
 
         [HttpGet]
-        public IActionResult CurrentRound()
+        public ActionResult<string> RefreshToken(string token)
         {
-            var round = _dbContext.CurrentRound.Last().Current;
-            return Ok(round);
+            var newToken = RefreshTokenInternal(token);
+            if (newToken == null) return BadRequest(TokenState.Invalid);
+            return newToken;
+        }
+
+        [HttpGet]
+        public ActionResult<int> CurrentRound(string category)
+        {
+            var roundQuery = from tRound in _dbContext.Rounds
+                where tRound.Category == category
+                where tRound.Current == 1
+                orderby tRound.Round
+                select tRound;
+            if (!roundQuery.Any()) return -1;
+
+            return roundQuery.Last().Round;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> StartNewRound(string category)
+        {
+            if (!Request.Headers.ContainsKey("token")) return BadRequest(ScoreBoardPostError.TokenNotPassed);
+            var token = Request.Headers["token"][0];
+
+            var payload = JWTJudgeProvider.DecodeToken(token);
+            if (payload == null) return BadRequest(ScoreBoardPostError.InvalidToken);
+
+            if (payload.Status != "admin") return BadRequest(ScoreBoardPostError.AccessDenied);
+
+            var roundQuery = from tRound in _dbContext.Rounds
+                where tRound.Category == category
+                orderby tRound.Round
+                select tRound;
+
+            foreach (var round in roundQuery)
+                round.Current = 0;
+
+            if (!roundQuery.Any())
+                _dbContext.Rounds.Add(new CompetitionRound {Category = category, Round = 1, Current = 1});
+            else
+            {
+                var lastRound = roundQuery.Last().Round;
+                _dbContext.Rounds.Add(new CompetitionRound {Category = category, Round = lastRound + 1, Current = 1});
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet]
@@ -116,14 +147,30 @@ namespace RROWebService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<OmlScore>> OmlPreResults(int? polygon)
+        public ActionResult<IEnumerable<OmlScore>> OmlPreResults(int tour, int? polygon, int? round, string teamId)
         {
-            var teams = _dbContext.OMLScoreBoard.AsQueryable();
+            var teams = from team in _dbContext.OMLPreResults
+                where team.Tour == tour
+                select team;
 
             if (polygon != null)
             {
                 teams = from team in teams
                     where team.Polygon == polygon
+                    select team;
+            }
+
+            if (round != null)
+            {
+                teams = from team in teams
+                    where team.Round == round
+                    select team;
+            }
+
+            if (!String.IsNullOrWhiteSpace(teamId))
+            {
+                teams = from team in teams
+                    where team.TeamId == teamId
                     select team;
             }
 
@@ -141,7 +188,6 @@ namespace RROWebService.Controllers
 
             return judge.First();
         }
-
 
         [HttpGet]
         public ActionResult<RROJudge> JudgeFin(string judgeId)
@@ -170,57 +216,76 @@ namespace RROWebService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<RROJudge> Judge(string token, string judgeId, int? tour)
+        public ActionResult<RROJudge> Judge(string token)
         {
-            var tJudgeId = judgeId;
-            var tTour = tour ?? -1;
-            if (!String.IsNullOrWhiteSpace(token))
-            {
-                JudgePayload payload;
-                try
-                {
-                    payload = JWTJudgeProvider.DecodeToken(token);
-                }
-                catch (Exception e)
-                {
-                    return BadRequest("Can't resolve token: " + e.Message);
-                }
+            var payload = JWTJudgeProvider.DecodeToken(token);
 
-                tJudgeId = payload.JudgeId;
-                tTour = payload.Tour;
-            }
+            if (payload == null) return BadRequest(TokenState.Invalid);
 
-            switch (tTour)
+            var judgeId = payload.JudgeId;
+            var tour = payload.Tour;
+
+            switch (tour)
             {
                 case 0:
                     var judgeCv = (from tJ in _dbContext.JudgesCv
-                        where tJ.JudgeId == tJudgeId
+                        where tJ.JudgeId == judgeId
                         select tJ).FirstOrDefault();
 
-                    if (judgeCv == null) return Ok();
-                    return judgeCv;
+                    if (judgeCv == null) return BadRequest(TokenState.Invalid);
+                    return new RROJudge
+                    {
+                        JudgeId = judgeCv.JudgeId,
+                        Polygon = judgeCv.Polygon,
+                        Status = judgeCv.Status,
+                        JudgeName = judgeCv.JudgeName
+                    };
                 case 1:
                     var judgeFin = (from tJ in _dbContext.JudgesFin
-                        where tJ.JudgeId == tJudgeId
+                        where tJ.JudgeId == judgeId
                         select tJ).FirstOrDefault();
 
-                    if (judgeFin == null) return Ok();
-                    return judgeFin;
+                    if (judgeFin == null) return BadRequest(TokenState.Invalid);
+                    return new RROJudge
+                    {
+                        JudgeId = judgeFin.JudgeId,
+                        Polygon = judgeFin.Polygon,
+                        Status = judgeFin.Status,
+                        JudgeName = judgeFin.JudgeName
+                    };
                 default:
-                    return BadRequest("Invalid tour parameter value");
+                    return BadRequest(TokenState.Invalid);
             }
-
         }
 
         [HttpPost]
-        public async Task<IActionResult> OmlResult([FromBody] OmlScore score)
+        public async Task<ActionResult<string>> OmlPreResult([FromBody] OmlScore score)
         {
-            if (!Request.Cookies.ContainsKey("judgeid"))
-                return Unauthorized();
+            if (!Request.Headers.ContainsKey("token"))
+                return BadRequest(ScoreBoardPostError.TokenNotPassed);
 
-            var judgeId = Request.Cookies["judgeid"];
+            var token = Request.Headers["token"][0];
+            var payload = JWTJudgeProvider.DecodeToken(token);
 
-            var teamInBase = from it in _dbContext.OMLScoreBoard
+            if (payload == null) return BadRequest(ScoreBoardPostError.InvalidToken);
+            if (payload.Expires <= DateTime.Now) return BadRequest(ScoreBoardPostError.TokenExpired);
+
+            var judgeId = payload.JudgeId;
+            if (score.JudgeId != judgeId)
+                return BadRequest(ScoreBoardPostError.RecordPayloadMismatch);
+
+            if (score.Saved == 1)
+            {
+                var hasNulls = score.RedBlockState == null || score.YellowBlockState == null ||
+                               score.GreenBlockState == null || score.WhiteBlock1State == null ||
+                               score.WhiteBlock2State == null || score.BlueBlockState == null ||
+                               score.BattaryBlock1State == null || score.BattaryBlock2State == null ||
+                               score.RobotState == null || score.Wall1State == null || score.Wall2State == null ||
+                               score.Time1 == null || score.Time2 == null;
+                if (hasNulls) return BadRequest(ScoreBoardPostError.InvalidModelContainsNulls);
+            }
+
+            var teamInBase = from it in _dbContext.OMLPreResults
                 where it.Round == score.Round
                 where it.TeamId == score.TeamId
                 select it;
@@ -228,29 +293,34 @@ namespace RROWebService.Controllers
             if (!teamInBase.Any())
             {
                 score.JudgeId = judgeId;
-                await _dbContext.OMLScoreBoard.AddAsync(score);
+                await _dbContext.OMLPreResults.AddAsync(score);
                 await _dbContext.SaveChangesAsync();
-                return Ok();
+                var newToken = RefreshTokenInternal(token);
+                return newToken;
             }
 
             var record = teamInBase.First();
-            if (record.Saved == 1) return Forbid();
+            if (record.Saved == 1) return BadRequest(ScoreBoardPostError.OverwritingForbidden);
 
             record.JudgeId = judgeId;
-            record.BlackBlockState = score.BlackBlockState;
+            record.Tour = score.Tour;
+            record.RedBlockState = score.RedBlockState;
+            record.YellowBlockState = score.YellowBlockState;
+            record.GreenBlockState = score.GreenBlockState;
+            record.WhiteBlock1State = score.WhiteBlock1State;
+            record.WhiteBlock2State = score.WhiteBlock2State;
             record.BlueBlockState = score.BlueBlockState;
-            record.BrokenWall = score.BrokenWall;
-            record.FinishCorrectly = score.FinishCorrectly;
-            record.LiesCorrectly = score.LiesCorrectly;
-            record.LiesIncorrectly = score.LiesIncorrectly;
-            record.None = score.None;
-            record.PartiallyCorrect = score.PartiallyCorrect;
+            record.BattaryBlock1State = score.BattaryBlock1State;
+            record.BattaryBlock2State = score.BattaryBlock2State;
+            record.RobotState = score.RobotState;
+            record.Wall1State = score.Wall1State;
+            record.Wall2State = score.Wall2State;
+            record.Time1 = score.Time1;
+            record.Time2 = score.Time2;
             record.Saved = score.Saved;
-            record.StaysCorrectly = score.StaysCorrectly;
-            record.StaysIncorrectly = score.StaysIncorrectly;
-            record.TimeMils = score.TimeMils;
             await _dbContext.SaveChangesAsync();
-            return Ok();
+            var newToken2 = RefreshTokenInternal(token);
+            return newToken2;
         }
 
         private ActionResult<IEnumerable<RROTeam>> TeamsCv(int? polygon, string category)

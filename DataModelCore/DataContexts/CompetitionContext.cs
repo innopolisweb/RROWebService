@@ -25,10 +25,10 @@ namespace DataModelCore.DataContexts
         public DbSet<RROJudgeCv> JudgesCv { get; set; }
 
         public DbSet<RROJudgeFin> JudgesFin { get; set; }
+                                                                
+        public DbSet<OmlScore> OMLPreResults { get; set; }
 
-        public DbSet<OmlScore> OMLScoreBoard { get; set; }
-
-        public DbSet<CurrentRound> CurrentRound { get; set; }
+        public DbSet<CompetitionRound> Rounds { get; set; }
 
         public DbSet<CurrentTour> CurrentTour { get; set; }
 

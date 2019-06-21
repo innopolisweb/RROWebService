@@ -91,17 +91,6 @@ namespace RROWebService.Controllers
                 vm.Teams.Add(new OmlScoreViewModel
                 {
                     TeamId = temp.TeamId,
-                    BlackBlockState = temp.BlackBlockState,
-                    BlueBlockState = temp.BlueBlockState,
-                    BrokenWall = temp.BrokenWall,
-                    FinishCorrectly = temp.FinishCorrectly,
-                    LiesCorrectly = temp.LiesCorrectly,
-                    LiesIncorrectly = temp.LiesIncorrectly,
-                    None = temp.None,
-                    PartiallyCorrect = temp.PartiallyCorrect,
-                    StaysCorrectly = temp.StaysCorrectly,
-                    StaysIncorrectly = temp.StaysIncorrectly,
-                    TimeMils = temp.TimeMils,
                     Saved = temp.Saved
                 });
             }

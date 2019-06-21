@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using DataModelCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RROWebService.Models;
 
 namespace RROWebService.Controllers
@@ -19,9 +21,10 @@ namespace RROWebService.Controllers
 
             var token = Request.Cookies["token"];
             var response = await new HttpClient().GetAsync($"https://rro.azurewebsites.net/api/checktoken?token={token}");
-            var content = await response.Content.ReadAsStringAsync();
+            var contentString = await response.Content.ReadAsStringAsync();
+            var content = JsonConvert.DeserializeObject<TokenState>(contentString);
 
-            if (content == "Valid") return RedirectToAction("Index", "ScoreBoard");
+            if (content == TokenState.Valid) return RedirectToAction("Index", "ScoreBoard");
             return View(new AuthorizationViewModel());
         }
 

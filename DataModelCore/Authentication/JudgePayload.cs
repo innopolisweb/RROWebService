@@ -28,7 +28,7 @@ namespace DataModelCore.Authentication
                 Service = service
             };
             if (service != "androidApp")
-                payload.Expires = payload.OpenTime + TimeSpan.FromMinutes(40);
+                payload.Expires = payload.OpenTime + TimeSpan.FromMinutes(20);
             else 
                 payload.Expires = DateTime.MaxValue;
             return payload;

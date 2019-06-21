@@ -1,0 +1,10 @@
+﻿DROP TABLE OmlRounds;
+DROP TABLE OsrRounds;
+DROP TABLE OstRounds;
+
+CREATE TABLE Rounds(
+[Node] int NOT NULL IDENTITY,
+[Round] INT NOT NULL,
+[Category] NVARCHAR(50) NOT NULL,
+[Current] INT NOT NULL 
+);

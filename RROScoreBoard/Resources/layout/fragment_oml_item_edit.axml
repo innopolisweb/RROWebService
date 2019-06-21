@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:padding="10dp">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="22sp"
+	  	android:gravity="center"
+		android:textStyle="bold"
+		android:textColor="@android:color/black"
+		android:id="@+id/oml_item_edit_team_id"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/holo_red_light"
+						android:textSize="20sp"
+						android:text="@string/red_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/adult"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_redblock_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/passenger_states"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/holo_orange_light"
+						android:textSize="20sp"
+						android:text="@string/yellow_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/child"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_yellowblock_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/passenger_states"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/holo_green_dark"
+						android:textSize="20sp"
+						android:text="@string/green_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/child"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_greenblock_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/passenger_states"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/white_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/adult"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_whiteblock1_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/passenger_states"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/white_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/child"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_whiteblock2_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/passenger_states"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<View
+				android:layout_marginVertical="2dp"
+				android:layout_height="2dp"
+				android:layout_width="match_parent"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/holo_blue_dark"
+						android:textSize="20sp"
+						android:text="@string/blue_block"
+						android:layout_marginRight="5dp"/>
+
+					<TextView
+						android:layout_marginTop="2dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="15sp"
+						android:text="@string/visitor"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<CheckBox
+						android:id="@+id/oml_item_edit_blue_checkbox"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/blue_block_description"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<View
+				android:layout_marginVertical="2dp"
+				android:layout_height="2dp"
+				android:layout_width="match_parent"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:inputType="textMultiLine"
+						android:maxLines="2"
+						android:text="@string/battary_block1"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_battaryblock1_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/battary_state"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:inputType="textMultiLine"
+						android:maxLines="2"
+						android:text="@string/battary_block2"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<Spinner
+						android:id="@+id/oml_item_edit_battaryblock2_spinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/battary_state"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<View
+				android:layout_marginVertical="2dp"
+				android:layout_height="2dp"
+				android:layout_width="match_parent"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/robot"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<CheckBox
+						android:id="@+id/oml_item_edit_robot_checkbox"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/robot_decription"/>
+
+				</LinearLayout>
+
+
+		</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/wall1"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<CheckBox
+						android:id="@+id/oml_item_edit_wall1_checkbox"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/wall_description"/>
+
+				</LinearLayout>
+
+
+		</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/wall2"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<CheckBox
+						android:id="@+id/oml_item_edit_wall2_checkbox"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/wall_description"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<View
+				android:layout_marginVertical="2dp"
+				android:layout_height="2dp"
+				android:layout_width="match_parent"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/time1"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<EditText
+						android:hint="mm:ss.ds"
+						android:id="@+id/oml_item_edit_time1_edittext"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:textAlignment="center"
+						android:inputType="number"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_marginTop="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/black"
+						android:textSize="20sp"
+						android:text="@string/time2"
+						android:layout_marginRight="5dp"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="right|center_vertical"
+					android:orientation="horizontal">
+
+					<EditText
+						android:id="@+id/oml_item_edit_time2_edittext"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:hint="mm:ss.ds"
+						android:textAlignment="center"
+						android:inputType="number"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:gravity="center">
+
+				<Button
+					android:textSize="20sp"
+					android:layout_margin="5dp"
+					android:id="@+id/oml_item_edit_save_button"
+					style="@style/Widget.AppCompat.Button.Borderless.Colored"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/save"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>
